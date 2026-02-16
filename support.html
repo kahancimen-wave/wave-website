@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support – Wave</title>
+  <meta name="description" content="Hilfe und Support für die Wave Dating-App.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #334155;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: #1E293B;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #1E293B;
+    }
+
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 140px 24px 80px;
+    }
+
+    .content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 12px;
+    }
+
+    .content .subtitle {
+      font-size: 16px;
+      color: #64748B;
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .content h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    .content p, .content li {
+      font-size: 15px;
+      color: #64748B;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .content ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, #E8F4FC, #F0F4F8);
+      border-radius: 16px;
+      padding: 32px;
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .contact-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-bottom: 8px;
+    }
+
+    .contact-card p {
+      text-align: center;
+    }
+
+    .contact-card a {
+      color: #80C4E9;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #F1F5F9;
+      padding: 20px 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-item h3 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1E293B;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      margin-bottom: 0;
+    }
+
+    footer {
+      padding: 48px 40px;
+      border-top: 1px solid #F1F5F9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #94A3B8;
+      letter-spacing: 1px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #64748B;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #CBD5E1;
+      width: 100%;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 13px; }
+      footer { padding: 32px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Wave</a>
+    <ul class="nav-links">
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/agb">AGB</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <h1>Support</h1>
+    <p class="subtitle">Wir helfen dir gerne weiter. Hier findest du Antworten auf häufige Fragen und Möglichkeiten, uns zu kontaktieren.</p>
+
+    <h2>Häufige Fragen</h2>
+
+    <div class="faq-item">
+      <h3>Wie funktioniert das Matching bei Wave?</h3>
+      <p>Unser Algorithmus analysiert deine Persönlichkeit, Werte, Interessen und weitere Faktoren, um dir Vorschläge zu machen, die wirklich zu dir passen. Je vollständiger dein Profil ist, desto besser werden deine Matches.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Kann ich mein Konto löschen?</h3>
+      <p>Ja, du kannst dein Konto jederzeit über die App-Einstellungen löschen. Alle deine Daten werden innerhalb von 30 Tagen vollständig entfernt.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Was bedeuten die optionalen Felder?</h3>
+      <p>Felder unter „Was ist dir noch wichtig?" sind optional. Wähle nur aus, was dir bei deinem Match wirklich wichtig ist. Felder ohne Auswahl bedeuten, dass du offen für alles bist.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Wie kann ich einen Nutzer melden?</h3>
+      <p>Wenn du unangemessenes Verhalten bemerkst, kannst du den Nutzer direkt über sein Profil melden. Unser Team prüft jede Meldung sorgfältig.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Ist Wave kostenlos?</h3>
+      <p>Die Grundfunktionen von Wave sind kostenlos nutzbar.</p>
+    </div>
+
+    <div class="contact-card">
+      <h3>Noch Fragen?</h3>
+      <p>Schreib uns eine E-Mail und wir melden uns so schnell wie möglich bei dir.</p>
+      <p><a href="mailto:support@wave-network.de">support@wave-network.de</a></p>
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-logo">Wave</span>
+    <ul class="footer-links">
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/agb">AGB</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 Wave. Alle Rechte vorbehalten.</p>
+  </footer>
+
+</body>
+</html>
