@@ -245,7 +245,7 @@
 
     .step-row {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 80px;
       margin-bottom: 120px;
     }
@@ -260,22 +260,6 @@
 
     .step-content {
       flex: 1;
-    }
-
-    .step-number {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #E8F4FC, #F0F4F8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 500;
-      color: #1E293B;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
 
     .step-content h3 {
@@ -559,7 +543,6 @@
 
       <div class="step-row fade-in">
         <div class="step-content">
-          <div class="step-number">1</div>
           <h3>Profil erstellen</h3>
           <p>Beantworte einige Fragen zu deiner Persönlichkeit, deinen Bedürfnissen und Interessen.</p>
         </div>
@@ -572,7 +555,6 @@
 
       <div class="step-row reverse fade-in">
         <div class="step-content">
-          <div class="step-number">2</div>
           <h3>Algorithmus arbeitet</h3>
           <p>Unser Algorithmus analysiert im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
         </div>
@@ -585,7 +567,6 @@
 
       <div class="step-row fade-in">
         <div class="step-content">
-          <div class="step-number">3</div>
           <h3>Kennenlernen</h3>
           <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgeschlagen. Zeit, sich kennenzulernen.</p>
         </div>
