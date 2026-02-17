@@ -150,8 +150,7 @@
       height: 100%;
       pointer-events: none;
       z-index: 0;
-      filter: invert(67%) sepia(10%) saturate(500%) hue-rotate(175deg) brightness(90%) contrast(85%);
-      opacity: 0.7;
+      opacity: 0.8;
     }
 
     .hero > *:not(.hero-waves) {
@@ -836,17 +835,15 @@
   <script>
     const waveAnim = lottie.loadAnimation({
       container: document.getElementById('waveLottie'),
-      renderer: 'canvas',
+      renderer: 'svg',
       loop: true,
       autoplay: true,
       path: 'waves.json',
       rendererSettings: {
-        progressiveLoad: true,
         preserveAspectRatio: 'none'
       }
     });
     waveAnim.setSpeed(0.4);
-    waveAnim.setSubframe(true);
   </script>
 
   <!-- Scroll Animation -->
