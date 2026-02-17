@@ -136,7 +136,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 180px 24px 80px;
+      padding: 220px 24px 80px;
       background: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
       position: relative;
       overflow: hidden;
@@ -836,12 +836,17 @@
   <script>
     const waveAnim = lottie.loadAnimation({
       container: document.getElementById('waveLottie'),
-      renderer: 'svg',
+      renderer: 'canvas',
       loop: true,
       autoplay: true,
-      path: 'waves.json'
+      path: 'waves.json',
+      rendererSettings: {
+        progressiveLoad: true,
+        preserveAspectRatio: 'none'
+      }
     });
     waveAnim.setSpeed(0.4);
+    waveAnim.setSubframe(true);
   </script>
 
   <!-- Scroll Animation -->
