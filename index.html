@@ -141,23 +141,6 @@
       position: relative;
     }
 
-    .hero-icon {
-      width: 88px;
-      height: 88px;
-      border-radius: 22px;
-      margin-bottom: 28px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      overflow: hidden;
-      position: relative;
-      background: #FFFFFF;
-      animation: glow 3.5s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-      50% { box-shadow: 0 4px 32px rgba(128,196,233,0.35), 0 0 16px rgba(128,196,233,0.15); }
-    }
-
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(48px, 8vw, 80px);
@@ -208,31 +191,6 @@
       background: #fff;
       color: #1E293B;
       border: 1px solid #E2E8F0;
-    }
-
-    .scroll-indicator {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: #94A3B8;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 1px;
-      animation: scrollBounce 2s ease-in-out infinite;
-    }
-
-    .scroll-indicator svg {
-      opacity: 0.5;
-    }
-
-    @keyframes scrollBounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
     }
 
     /* --- Section Base --- */
@@ -683,9 +641,6 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-icon">
-      <img src="wave_icon.png" alt="Wave" style="width: 100%; height: 110%; object-fit: cover; object-position: center 40%; display: block;">
-    </div>
     <h1>Wave</h1>
     <p class="tagline">Immer auf der selben Wellenlänge</p>
     <div class="hero-badges">
@@ -697,9 +652,6 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.04L14.46 12 3.18.96c-.36.28-.58.71-.58 1.2v19.68c0 .49.22.92.58 1.2zm1.83 1.02l12.7-7.32-2.82-2.82-9.88 10.14zm15.56-11.44l-3.48-2.01-3.04 3.04 3.04 3.04 3.48-2.01c.66-.38.66-1.68 0-2.06zM5.01.94l9.88 10.14 2.82-2.82L5.01.94z"/></svg>
         Google Play
       </a>
-    </div>
-    <div class="scroll-indicator">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
     </div>
   </section>
 
