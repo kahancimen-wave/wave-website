@@ -144,12 +144,14 @@
 
     .hero-waves {
       position: absolute;
-      top: 0;
-      left: -5%;
-      width: 110%;
-      height: 100%;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 60%;
       pointer-events: none;
       z-index: 0;
+      filter: invert(67%) sepia(10%) saturate(500%) hue-rotate(175deg) brightness(90%) contrast(85%);
+      opacity: 0.7;
     }
 
     .hero > *:not(.hero-waves) {
@@ -657,7 +659,7 @@
 
   <!-- Hero -->
   <section class="hero">
-    <canvas class="hero-waves" id="waveCanvas"></canvas>
+    <div class="hero-waves" id="waveLottie"></div>
     <h1>Wave</h1>
     <p class="tagline">Immer auf der selben Wellenlänge</p>
     <div class="hero-badges">
@@ -829,61 +831,16 @@
     </div>
   </footer>
 
-  <!-- Wave Animation -->
+  <!-- Lottie Player -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   <script>
-    (function() {
-      const canvas = document.getElementById('waveCanvas');
-      const ctx = canvas.getContext('2d');
-
-      function resize() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        canvas.width = rect.width * 1.1;
-        canvas.height = rect.height;
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      const waves = [
-        { color: [168, 200, 224], opacity: 0.6, baseY: 0.55, amplitude: 18, frequency: 1.5, phaseSpeed: 0.4 },
-        { color: [200, 216, 208], opacity: 0.5, baseY: 0.65, amplitude: 15, frequency: 1.2, phaseSpeed: 0.3 },
-        { color: [216, 208, 224], opacity: 0.4, baseY: 0.75, amplitude: 12, frequency: 1.8, phaseSpeed: 0.5 },
-      ];
-
-      function drawWave(w, t) {
-        const width = canvas.width;
-        const height = canvas.height;
-        const baseY = w.baseY * height;
-        const phase = t * w.phaseSpeed;
-
-        ctx.beginPath();
-        ctx.moveTo(0, height);
-
-        const steps = 120;
-        for (let i = 0; i <= steps; i++) {
-          const x = (i / steps) * width;
-          const waveX = (i / steps) * w.frequency * 2 * Math.PI;
-          const y = baseY + Math.sin(waveX + phase) * w.amplitude;
-          ctx.lineTo(x, y);
-        }
-
-        ctx.lineTo(width, height);
-        ctx.closePath();
-
-        const gradient = ctx.createLinearGradient(0, baseY - w.amplitude, 0, height);
-        gradient.addColorStop(0, `rgba(${w.color[0]},${w.color[1]},${w.color[2]},${w.opacity})`);
-        gradient.addColorStop(1, `rgba(${w.color[0]},${w.color[1]},${w.color[2]},0)`);
-        ctx.fillStyle = gradient;
-        ctx.fill();
-      }
-
-      function animate(time) {
-        const t = time / 1000;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        waves.forEach(w => drawWave(w, t));
-        requestAnimationFrame(animate);
-      }
-      requestAnimationFrame(animate);
-    })();
+    lottie.loadAnimation({
+      container: document.getElementById('waveLottie'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'waves.json'
+    });
   </script>
 
   <!-- Scroll Animation -->
