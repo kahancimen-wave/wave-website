@@ -150,7 +150,7 @@
       height: 100%;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.8;
+      opacity: 0.6;
     }
 
     .hero > *:not(.hero-waves) {
@@ -840,10 +840,12 @@
       autoplay: true,
       path: 'waves.json',
       rendererSettings: {
-        preserveAspectRatio: 'none'
+        preserveAspectRatio: 'none',
+        progressiveLoad: true
       }
     });
     waveAnim.setSpeed(0.4);
+    waveAnim.setSubframe(true);
   </script>
 
   <!-- Scroll Animation -->
