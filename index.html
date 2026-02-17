@@ -301,17 +301,21 @@
     /* --- Phone Mockup --- */
     .phone-mockup {
       width: 280px;
-      background: #000;
-      border-radius: 44px;
-      padding: 12px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.08);
+      background: #1A1A1A;
+      border-radius: 52px;
+      padding: 4px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.1) inset,
+        0 0 0 1px rgba(0,0,0,0.3),
+        0 20px 60px rgba(0,0,0,0.18),
+        0 4px 16px rgba(0,0,0,0.1);
       position: relative;
     }
 
     .phone-screen {
-      border-radius: 34px;
+      border-radius: 48px;
       overflow: hidden;
-      background: #fff;
+      background: #000;
       aspect-ratio: 393/852;
     }
 
@@ -322,16 +326,16 @@
       display: block;
     }
 
-    .phone-notch {
+    /* Side button right */
+    .phone-mockup::after {
+      content: '';
       position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 34px;
-      background: #000;
-      border-radius: 0 0 20px 20px;
-      z-index: 2;
+      right: -2px;
+      top: 160px;
+      width: 3px;
+      height: 56px;
+      background: #2A2A2A;
+      border-radius: 0 2px 2px 0;
     }
 
 
@@ -588,7 +592,6 @@
         </div>
         <div class="step-phone">
           <div class="phone-mockup">
-            <div class="phone-notch"></div>
             <div class="phone-screen">
               <img src="screen-step3.png" alt="Profil erstellen">
             </div>
@@ -604,7 +607,6 @@
         </div>
         <div class="step-phone">
           <div class="phone-mockup">
-            <div class="phone-notch"></div>
             <div class="phone-screen">
               <img src="screen-step3.png" alt="Algorithmus arbeitet">
             </div>
@@ -620,7 +622,6 @@
         </div>
         <div class="step-phone">
           <div class="phone-mockup">
-            <div class="phone-notch"></div>
             <div class="phone-screen">
               <img src="screen-step3.png" alt="Kennenlernen">
             </div>
