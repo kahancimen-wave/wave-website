@@ -421,7 +421,7 @@
 
     .step-number {
       font-family: 'Playfair Display', serif;
-      font-size: 48px;
+      font-size: 64px;
       font-weight: 400;
       color: #94A3B8;
       letter-spacing: 1px;
@@ -871,6 +871,24 @@
     /* --- Steps: Pinned Section with Snap --- */
     const stepPanels = document.querySelectorAll('.step-panel');
     const phoneScreens = document.querySelectorAll('.phone-screen');
+
+    /* Scroll-Lock: 2 Sekunden kein Scrollen wenn Schritt 1 erreicht wird */
+    let scrollLocked = false;
+    ScrollTrigger.create({
+      trigger: '.steps-pinned',
+      start: 'top top',
+      onEnter: () => {
+        if (!scrollLocked) {
+          scrollLocked = true;
+          document.body.style.overflow = 'hidden';
+          setTimeout(() => {
+            document.body.style.overflow = '';
+            scrollLocked = false;
+          }, 2000);
+        }
+      },
+      once: true
+    });
 
     const stepsTl = gsap.timeline({
       scrollTrigger: {
