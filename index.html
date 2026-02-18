@@ -13,6 +13,14 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       color: #334155;
@@ -154,7 +162,26 @@
       opacity: 0.7;
     }
 
-    .hero > *:not(.hero-waves) {
+    .hero-glow {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(120,160,220,0.12) 0%, transparent 70%);
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+      animation: glowPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    .hero > *:not(.hero-waves):not(.hero-glow) {
       position: relative;
       z-index: 1;
     }
@@ -335,51 +362,32 @@
       line-height: 1.8;
     }
 
-    /* --- Steps Section --- */
-    .steps {
+    /* --- Text Reveal (word by word) --- */
+    .reveal-text .word {
+      display: inline-block;
+      opacity: 0.12;
+      will-change: opacity;
+    }
+
+    /* --- Steps Section (Sticky Phone) --- */
+    .steps-pinned {
       background: #FFFFFF;
     }
 
-    .step-row {
+    .steps-layout {
       display: flex;
-      align-items: flex-start;
       gap: 80px;
-      margin-bottom: 120px;
+      position: relative;
     }
 
-    .step-row:last-child {
-      margin-bottom: 0;
+    .steps-phone-col {
+      flex: 0 0 380px;
+      position: sticky;
+      top: 140px;
+      height: fit-content;
+      align-self: flex-start;
     }
 
-    .step-row.reverse {
-      flex-direction: row-reverse;
-    }
-
-    .step-content {
-      flex: 1;
-    }
-
-    .step-content h3 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 28px;
-      font-weight: 600;
-      color: #1E293B;
-      margin-bottom: 16px;
-    }
-
-    .step-content p {
-      font-size: 17px;
-      color: #64748B;
-      line-height: 1.8;
-      font-weight: 300;
-      max-width: 400px;
-    }
-
-    .step-phone {
-      flex-shrink: 0;
-    }
-
-    /* --- Phone Image --- */
     .phone-img {
       width: 380px;
       filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
@@ -392,6 +400,37 @@
       border-radius: 40px;
     }
 
+    .steps-text-col {
+      flex: 1;
+    }
+
+    .step-panel {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .step-panel:last-child {
+      min-height: 60vh;
+    }
+
+    .step-panel h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-bottom: 16px;
+    }
+
+    .step-panel p {
+      font-size: 17px;
+      color: #64748B;
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 400px;
+    }
 
     /* --- CTA Section (dark) --- */
     .cta {
@@ -528,16 +567,10 @@
       color: #94A3B8;
     }
 
-    /* --- Scroll Animations --- */
+    /* --- Base for GSAP animations --- */
     .fade-in {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
+      transform: translateY(30px);
     }
 
     /* --- Mobile --- */
@@ -556,25 +589,35 @@
         padding-top: 0;
       }
 
-      .step-row,
-      .step-row.reverse {
+      .steps-layout {
         flex-direction: column;
-        text-align: center;
-        gap: 48px;
-        margin-bottom: 80px;
+        gap: 0;
       }
 
-      .step-number {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .step-content p {
-        margin: 0 auto;
+      .steps-phone-col {
+        position: relative;
+        top: auto;
+        flex: none;
+        width: 260px;
+        margin: 0 auto 48px;
       }
 
       .phone-img {
-        width: 240px;
+        width: 100%;
+      }
+
+      .step-panel {
+        min-height: auto;
+        text-align: center;
+        padding: 48px 0;
+      }
+
+      .step-panel:last-child {
+        min-height: auto;
+      }
+
+      .step-panel p {
+        margin: 0 auto;
       }
 
       .footer-grid {
@@ -589,6 +632,7 @@
       .nav-toggle { display: flex; }
 
       .section { padding: 80px 20px; }
+      .statement-1, .statement-2 { padding: 80px 20px; }
 
       .hero { padding: 100px 20px 80px; }
 
@@ -632,6 +676,7 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-waves" id="waveLottie"></div>
+    <div class="hero-glow"></div>
     <h1>Wave</h1>
     <p class="tagline">Immer auf der selben Wellenlänge</p>
     <div class="hero-badges">
@@ -650,67 +695,52 @@
   <section class="statement-1">
     <div class="statement-1-inner">
       <p class="statement-1-eyebrow fade-in">Was ist Wave</p>
-      <p class="statement-1-lead fade-in">Die Wissenschaft kann vorhersagen, welche Menschen miteinander kompatibel sind.</p>
-      <p class="statement-1-follow fade-in">Wir haben daraus einen Algorithmus gebaut.</p>
+      <p class="statement-1-lead reveal-text">Die Wissenschaft kann vorhersagen, welche Menschen miteinander kompatibel sind.</p>
+      <p class="statement-1-follow reveal-text">Wir haben daraus einen Algorithmus gebaut.</p>
     </div>
   </section>
 
   <!-- Part 2 -->
   <section class="statement-2">
     <div class="statement-2-inner">
-      <div class="fade-in">
-        <p class="statement-2-eyebrow">Der Algorithmus</p>
-        <p class="statement-2-heading">Unser Algorithmus stellt die richtigen Fragen und analysiert im Hintergrund. Er präsentiert euch nur einander, sobald eine Kompatibilität erkannt wird und das exklusiv.</p>
+      <div>
+        <p class="statement-2-eyebrow fade-in">Der Algorithmus</p>
+        <p class="statement-2-heading reveal-text">Unser Algorithmus stellt die richtigen Fragen und analysiert im Hintergrund. Er präsentiert euch nur einander, sobald eine Kompatibilität erkannt wird und das exklusiv.</p>
       </div>
-      <div class="statement-2-right fade-in">
-        <p class="statement-2-punch">Kein Swipen. Kein Suchen.</p>
-        <p class="statement-2-close">Lerne nur jemanden kennen, der auf deiner Wellenlänge ist.</p>
+      <div class="statement-2-right">
+        <p class="statement-2-punch reveal-text">Kein Swipen. Kein Suchen.</p>
+        <p class="statement-2-close reveal-text">Lerne nur jemanden kennen, der auf deiner Wellenlänge ist.</p>
       </div>
     </div>
   </section>
 
-  <!-- So funktioniert's -->
-  <section class="section steps">
+  <!-- So funktioniert's (Sticky Phone) -->
+  <section class="section steps-pinned">
     <div class="section-inner">
       <h2 class="section-title fade-in">So funktioniert's</h2>
       <p class="section-subtitle fade-in">In drei einfachen Schritten zu deinem Match</p>
 
-      <div class="step-row fade-in">
-        <div class="step-content">
-          <h3>Profil erstellen</h3>
-          <p>Beantworte einige Fragen zu deiner Persönlichkeit, deinen Bedürfnissen und Interessen.</p>
-        </div>
-        <div class="step-phone">
+      <div class="steps-layout">
+        <div class="steps-phone-col">
           <div class="phone-img">
-            <img src="screen-step3.png" alt="Profil erstellen">
+            <img id="pinned-phone" src="screen-step3.png" alt="App Screenshot">
+          </div>
+        </div>
+        <div class="steps-text-col">
+          <div class="step-panel">
+            <h3>Profil erstellen</h3>
+            <p>Beantworte einige Fragen zu deiner Persönlichkeit, deinen Bedürfnissen und Interessen.</p>
+          </div>
+          <div class="step-panel">
+            <h3>Algorithmus arbeitet</h3>
+            <p>Unser Algorithmus analysiert im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
+          </div>
+          <div class="step-panel">
+            <h3>Kennenlernen</h3>
+            <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgeschlagen. Zeit, sich kennenzulernen.</p>
           </div>
         </div>
       </div>
-
-      <div class="step-row reverse fade-in">
-        <div class="step-content">
-          <h3>Algorithmus arbeitet</h3>
-          <p>Unser Algorithmus analysiert im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
-        </div>
-        <div class="step-phone">
-          <div class="phone-img">
-            <img src="screen-step3.png" alt="Algorithmus arbeitet">
-          </div>
-        </div>
-      </div>
-
-      <div class="step-row fade-in">
-        <div class="step-content">
-          <h3>Kennenlernen</h3>
-          <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgeschlagen. Zeit, sich kennenzulernen.</p>
-        </div>
-        <div class="step-phone">
-          <div class="phone-img">
-            <img src="screen-step3.png" alt="Kennenlernen">
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -766,9 +796,14 @@
     </div>
   </footer>
 
-  <!-- Lottie Player -->
+  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
   <script>
+    /* --- Lottie Wave Animation --- */
     const waveAnim = lottie.loadAnimation({
       container: document.getElementById('waveLottie'),
       renderer: 'svg',
@@ -782,19 +817,105 @@
     });
     waveAnim.setSpeed(0.4);
     waveAnim.setSubframe(true);
-  </script>
 
-  <!-- Scroll Animation -->
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+    /* --- Lenis Smooth Scroll --- */
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    /* --- GSAP Setup --- */
+    gsap.registerPlugin(ScrollTrigger);
+
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    /* --- Fade-In Animations (replaces IntersectionObserver) --- */
+    gsap.utils.toArray('.fade-in').forEach(el => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
         }
       });
-    }, { threshold: 0.15 });
+    });
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    /* --- Text Reveal (word by word on scroll) --- */
+    document.querySelectorAll('.reveal-text').forEach(el => {
+      const words = el.textContent.trim().split(/\s+/);
+      el.innerHTML = words.map(w => '<span class="word">' + w + '</span>').join(' ');
+
+      gsap.to(el.querySelectorAll('.word'), {
+        opacity: 1,
+        stagger: 0.04,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          end: 'top 30%',
+          scrub: true,
+        }
+      });
+    });
+
+    /* --- Step Panels Animate In --- */
+    gsap.utils.toArray('.step-panel').forEach(panel => {
+      gsap.from(panel, {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: panel,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    /* --- Hero Parallax --- */
+    gsap.to('.hero h1', {
+      y: -50,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    gsap.to('.hero .tagline', {
+      y: -30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    gsap.to('.hero-badges', {
+      y: -10,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: '60% top',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
   </script>
 
 </body>
