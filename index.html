@@ -360,25 +360,32 @@
       will-change: opacity;
     }
 
-    /* --- Steps Section --- */
-    .steps {
-      padding: 80px 24px 120px;
+    /* --- Steps Header --- */
+    .steps-header {
+      padding: 120px 24px 60px;
       background: #FFFFFF;
     }
 
-    .steps-layout {
+    /* --- Steps Pinned Section --- */
+    .steps-pinned {
+      height: 100vh;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .steps-pinned-inner {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
+      height: 100%;
       max-width: 1100px;
       margin: 0 auto;
+      padding: 0 24px;
+      padding-bottom: 80px;
       gap: 80px;
-      padding-top: 48px;
     }
 
     .steps-phone-col {
       flex: 0 0 380px;
-      position: sticky;
-      top: 120px;
     }
 
     .phone-img {
@@ -393,14 +400,25 @@
       border-radius: 40px;
     }
 
-    .steps-list {
+    .steps-text-col {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 64px;
+      position: relative;
+      height: 120px;
     }
 
-    .step-item h3 {
+    .step-panel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+    }
+
+    .step-panel.active {
+      opacity: 1;
+    }
+
+    .step-panel h3 {
       font-family: 'Poppins', sans-serif;
       font-size: 28px;
       font-weight: 600;
@@ -408,7 +426,7 @@
       margin-bottom: 16px;
     }
 
-    .step-item p {
+    .step-panel p {
       font-size: 17px;
       color: #64748B;
       line-height: 1.8;
@@ -573,27 +591,27 @@
         padding-top: 0;
       }
 
-      .steps-layout {
+      .steps-pinned-inner {
         flex-direction: column;
-        align-items: center;
-        gap: 48px;
+        justify-content: center;
+        gap: 40px;
+        padding: 40px 24px;
       }
 
       .steps-phone-col {
         flex: none;
         width: 260px;
-        position: static;
       }
 
       .phone-img {
         width: 100%;
       }
 
-      .steps-list {
+      .steps-text-col {
         text-align: center;
       }
 
-      .step-item p {
+      .step-panel p {
         margin: 0 auto;
       }
 
@@ -610,6 +628,7 @@
 
       .section { padding: 80px 20px; }
       .statement-1, .statement-2 { padding: 80px 20px; }
+      .steps-header { padding: 80px 20px 40px; }
 
       .hero { padding: 100px 20px 80px; }
 
@@ -691,28 +710,32 @@
     </div>
   </section>
 
-  <!-- So funktioniert's -->
-  <section class="steps section">
+  <!-- Steps Header -->
+  <section class="steps-header">
     <div class="section-inner">
       <h2 class="section-title fade-in">So funktioniert's</h2>
       <p class="section-subtitle fade-in">In drei einfachen Schritten zu deinem Match</p>
     </div>
-    <div class="steps-layout">
+  </section>
+
+  <!-- Steps Pinned -->
+  <section class="steps-pinned">
+    <div class="steps-pinned-inner">
       <div class="steps-phone-col">
         <div class="phone-img">
-          <img src="screen-step3.png" alt="App Screenshot">
+          <img id="pinned-phone" src="screen-step3.png" alt="App Screenshot">
         </div>
       </div>
-      <div class="steps-list">
-        <div class="step-item fade-in">
+      <div class="steps-text-col">
+        <div class="step-panel active">
           <h3>Profil erstellen</h3>
           <p>Beantworte einige Fragen zu deiner Persönlichkeit, deinen Bedürfnissen und Interessen.</p>
         </div>
-        <div class="step-item fade-in">
+        <div class="step-panel">
           <h3>Algorithmus arbeitet</h3>
           <p>Unser Algorithmus analysiert im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
         </div>
-        <div class="step-item fade-in">
+        <div class="step-panel">
           <h3>Kennenlernen</h3>
           <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgeschlagen. Zeit, sich kennenzulernen.</p>
         </div>
@@ -828,6 +851,34 @@
         }
       });
     });
+
+    /* --- Steps: Pinned Section with Snap --- */
+    const stepPanels = document.querySelectorAll('.step-panel');
+
+    const stepsTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.steps-pinned',
+        start: 'top top',
+        end: '+=200%',
+        pin: true,
+        scrub: 0.5,
+        snap: {
+          snapTo: 1 / 2,
+          duration: { min: 0.2, max: 0.5 },
+          ease: 'power1.inOut'
+        }
+      }
+    });
+
+    stepsTl
+      .to(stepPanels[0], { opacity: 0, y: -30, duration: 0.5 })
+      .to(stepPanels[1], { opacity: 1, y: 0, duration: 0.5 }, '<0.15')
+      .to(stepPanels[1], { opacity: 0, y: -30, duration: 0.5 })
+      .to(stepPanels[2], { opacity: 1, y: 0, duration: 0.5 }, '<0.15');
+
+    gsap.set(stepPanels[0], { opacity: 1, y: 0 });
+    gsap.set(stepPanels[1], { opacity: 0, y: 30 });
+    gsap.set(stepPanels[2], { opacity: 0, y: 30 });
 
     /* --- Hero Parallax --- */
     gsap.to('.hero h1', {
