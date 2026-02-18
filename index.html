@@ -144,10 +144,10 @@
 
     .hero-waves {
       position: absolute;
-      top: -34%;
-      left: 0;
-      width: 100%;
-      height: 110%;
+      top: -20%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
       pointer-events: none;
       z-index: 0;
       opacity: 0.7;
@@ -732,8 +732,11 @@
   <section class="steps-pinned">
     <div class="steps-pinned-inner">
       <div class="steps-phone-col">
-        <div class="phone-img">
-          <img id="pinned-phone" src="screen-step3.png" alt="App Screenshot">
+        <div class="phone-img" style="position:relative;">
+          <img class="phone-screen active" src="screen-step1.png?v=2" alt="App Screenshot Schritt 1" style="position:absolute;top:0;left:0;width:100%;transition:opacity 0.5s ease;">
+          <img class="phone-screen" src="screen-step2.png?v=2" alt="App Screenshot Schritt 2" style="position:absolute;top:0;left:0;width:100%;opacity:0;transition:opacity 0.5s ease;">
+          <img class="phone-screen" src="screen-step3.png?v=2" alt="App Screenshot Schritt 3" style="position:absolute;top:0;left:0;width:100%;opacity:0;transition:opacity 0.5s ease;">
+          <img src="screen-step1.png?v=2" alt="" style="width:100%;visibility:hidden;">
         </div>
       </div>
       <div class="steps-text-col">
@@ -867,6 +870,7 @@
 
     /* --- Steps: Pinned Section with Snap --- */
     const stepPanels = document.querySelectorAll('.step-panel');
+    const phoneScreens = document.querySelectorAll('.phone-screen');
 
     const stepsTl = gsap.timeline({
       scrollTrigger: {
@@ -886,14 +890,21 @@
 
     stepsTl
       .to(stepPanels[0], { opacity: 0, y: -40, duration: 0.5, ease: 'power3.inOut' })
+      .to(phoneScreens[0], { opacity: 0, duration: 0.5, ease: 'power3.inOut' }, '<')
       .to(stepPanels[1], { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '<0.25')
+      .to(phoneScreens[1], { opacity: 1, duration: 0.5, ease: 'power3.out' }, '<')
       .to({}, { duration: 0.4 })
       .to(stepPanels[1], { opacity: 0, y: -40, duration: 0.5, ease: 'power3.inOut' })
-      .to(stepPanels[2], { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '<0.25');
+      .to(phoneScreens[1], { opacity: 0, duration: 0.5, ease: 'power3.inOut' }, '<')
+      .to(stepPanels[2], { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '<0.25')
+      .to(phoneScreens[2], { opacity: 1, duration: 0.5, ease: 'power3.out' }, '<');
 
     gsap.set(stepPanels[0], { opacity: 1, y: 0 });
     gsap.set(stepPanels[1], { opacity: 0, y: 40 });
     gsap.set(stepPanels[2], { opacity: 0, y: 40 });
+    gsap.set(phoneScreens[0], { opacity: 1 });
+    gsap.set(phoneScreens[1], { opacity: 0 });
+    gsap.set(phoneScreens[2], { opacity: 0 });
 
     /* --- Hero Parallax --- */
     gsap.to('.hero h1', {
