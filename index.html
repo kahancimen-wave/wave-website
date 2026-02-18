@@ -13,14 +13,6 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html.lenis, html.lenis body {
-      height: auto;
-    }
-
-    .lenis.lenis-smooth {
-      scroll-behavior: auto;
-    }
-
     body {
       font-family: 'Poppins', sans-serif;
       color: #334155;
@@ -261,7 +253,7 @@
       color: #64748B;
       text-align: center;
       font-weight: 300;
-      margin-bottom: 64px;
+      margin-bottom: 0;
     }
 
     /* --- Statement Part 1 --- */
@@ -368,23 +360,31 @@
       will-change: opacity;
     }
 
-    /* --- Steps Section (Sticky Phone) --- */
-    .steps-pinned {
+    /* --- Steps Header --- */
+    .steps-header {
+      padding: 120px 24px 60px;
       background: #FFFFFF;
     }
 
-    .steps-layout {
+    /* --- Steps Pinned Section --- */
+    .steps-pinned {
+      height: 100vh;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .steps-pinned-inner {
       display: flex;
+      align-items: center;
+      height: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
       gap: 80px;
-      position: relative;
     }
 
     .steps-phone-col {
       flex: 0 0 380px;
-      position: sticky;
-      top: 140px;
-      height: fit-content;
-      align-self: flex-start;
     }
 
     .phone-img {
@@ -401,18 +401,20 @@
 
     .steps-text-col {
       flex: 1;
+      position: relative;
+      height: 120px;
     }
 
     .step-panel {
-      min-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 40px 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
     }
 
-    .step-panel:last-child {
-      min-height: 60vh;
+    .step-panel.active {
+      opacity: 1;
     }
 
     .step-panel h3 {
@@ -588,31 +590,24 @@
         padding-top: 0;
       }
 
-      .steps-layout {
+      .steps-pinned-inner {
         flex-direction: column;
-        gap: 0;
+        justify-content: center;
+        gap: 40px;
+        padding: 40px 24px;
       }
 
       .steps-phone-col {
-        position: relative;
-        top: auto;
         flex: none;
         width: 260px;
-        margin: 0 auto 48px;
       }
 
       .phone-img {
         width: 100%;
       }
 
-      .step-panel {
-        min-height: auto;
+      .steps-text-col {
         text-align: center;
-        padding: 48px 0;
-      }
-
-      .step-panel:last-child {
-        min-height: auto;
       }
 
       .step-panel p {
@@ -632,6 +627,7 @@
 
       .section { padding: 80px 20px; }
       .statement-1, .statement-2 { padding: 80px 20px; }
+      .steps-header { padding: 80px 20px 40px; }
 
       .hero { padding: 100px 20px 80px; }
 
@@ -713,31 +709,34 @@
     </div>
   </section>
 
-  <!-- So funktioniert's (Sticky Phone) -->
-  <section class="section steps-pinned">
+  <!-- Steps Header -->
+  <section class="steps-header">
     <div class="section-inner">
       <h2 class="section-title fade-in">So funktioniert's</h2>
       <p class="section-subtitle fade-in">In drei einfachen Schritten zu deinem Match</p>
+    </div>
+  </section>
 
-      <div class="steps-layout">
-        <div class="steps-phone-col">
-          <div class="phone-img">
-            <img id="pinned-phone" src="screen-step3.png" alt="App Screenshot">
-          </div>
+  <!-- Steps Pinned (scrollt intern, Seite bleibt stehen) -->
+  <section class="steps-pinned">
+    <div class="steps-pinned-inner">
+      <div class="steps-phone-col">
+        <div class="phone-img">
+          <img id="pinned-phone" src="screen-step3.png" alt="App Screenshot">
         </div>
-        <div class="steps-text-col">
-          <div class="step-panel">
-            <h3>Profil erstellen</h3>
-            <p>Beantworte einige Fragen zu deiner Persönlichkeit, deinen Bedürfnissen und Interessen.</p>
-          </div>
-          <div class="step-panel">
-            <h3>Algorithmus arbeitet</h3>
-            <p>Unser Algorithmus analysiert im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
-          </div>
-          <div class="step-panel">
-            <h3>Kennenlernen</h3>
-            <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgeschlagen. Zeit, sich kennenzulernen.</p>
-          </div>
+      </div>
+      <div class="steps-text-col">
+        <div class="step-panel active">
+          <h3>Profil erstellen</h3>
+          <p>Beantworte einige Fragen zu deiner Persönlichkeit, deinen Bedürfnissen und Interessen.</p>
+        </div>
+        <div class="step-panel">
+          <h3>Algorithmus arbeitet</h3>
+          <p>Unser Algorithmus analysiert im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
+        </div>
+        <div class="step-panel">
+          <h3>Kennenlernen</h3>
+          <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgeschlagen. Zeit, sich kennenzulernen.</p>
         </div>
       </div>
     </div>
@@ -797,7 +796,6 @@
 
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
@@ -817,23 +815,10 @@
     waveAnim.setSpeed(0.4);
     waveAnim.setSubframe(true);
 
-    /* --- Lenis Smooth Scroll --- */
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
     /* --- GSAP Setup --- */
     gsap.registerPlugin(ScrollTrigger);
 
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
-
-    /* --- Fade-In Animations (replaces IntersectionObserver) --- */
+    /* --- Fade-In Animations --- */
     gsap.utils.toArray('.fade-in').forEach(el => {
       gsap.to(el, {
         opacity: 1,
@@ -866,20 +851,36 @@
       });
     });
 
-    /* --- Step Panels Animate In --- */
-    gsap.utils.toArray('.step-panel').forEach(panel => {
-      gsap.from(panel, {
-        opacity: 0,
-        y: 60,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: panel,
-          start: 'top 80%',
-          toggleActions: 'play none none none'
+    /* --- Steps: Pinned Section with Snap --- */
+    const stepPanels = document.querySelectorAll('.step-panel');
+
+    const stepsTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.steps-pinned',
+        start: 'top top',
+        end: '+=200%',
+        pin: true,
+        scrub: 0.5,
+        snap: {
+          snapTo: 1 / 2,
+          duration: { min: 0.2, max: 0.5 },
+          ease: 'power1.inOut'
         }
-      });
+      }
     });
+
+    /* Step 1 -> Step 2 */
+    stepsTl
+      .to(stepPanels[0], { opacity: 0, y: -30, duration: 0.5 })
+      .to(stepPanels[1], { opacity: 1, y: 0, duration: 0.5 }, '<0.15')
+    /* Step 2 -> Step 3 */
+      .to(stepPanels[1], { opacity: 0, y: -30, duration: 0.5 })
+      .to(stepPanels[2], { opacity: 1, y: 0, duration: 0.5 }, '<0.15');
+
+    /* Set initial states */
+    gsap.set(stepPanels[0], { opacity: 1, y: 0 });
+    gsap.set(stepPanels[1], { opacity: 0, y: 30 });
+    gsap.set(stepPanels[2], { opacity: 0, y: 30 });
 
     /* --- Hero Parallax --- */
     gsap.to('.hero h1', {
