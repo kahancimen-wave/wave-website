@@ -402,8 +402,9 @@
     .steps-text-col {
       flex: 1;
       position: relative;
-      height: 120px;
-      margin-top: -100px;
+      height: 160px;
+      align-self: center;
+      transform: translateY(-80px);
     }
 
     .step-panel {
@@ -416,6 +417,15 @@
 
     .step-panel.active {
       opacity: 1;
+    }
+
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #94A3B8;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
     }
 
     .step-panel h3 {
@@ -728,14 +738,17 @@
       </div>
       <div class="steps-text-col">
         <div class="step-panel active">
+          <p class="step-number">01</p>
           <h3>Profil erstellen</h3>
           <p>Beantworte einige Fragen zu deiner Persönlichkeit, deinen Bedürfnissen und Interessen.</p>
         </div>
         <div class="step-panel">
+          <p class="step-number">02</p>
           <h3>Algorithmus arbeitet</h3>
           <p>Unser Algorithmus analysiert im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
         </div>
         <div class="step-panel">
+          <p class="step-number">03</p>
           <h3>Kennenlernen</h3>
           <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgeschlagen. Zeit, sich kennenzulernen.</p>
         </div>
