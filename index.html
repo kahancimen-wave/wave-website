@@ -909,23 +909,19 @@
     const stepPanels = document.querySelectorAll('.step-panel');
     const phoneScreens = document.querySelectorAll('.phone-screen');
 
-    /* Scroll-Lock: 2 Sekunden kein Scrollen wenn Schritt 1 erreicht wird */
+    /* Scroll-Lock: 1 Sekunde bei jedem Schrittwechsel */
     let scrollLocked = false;
-    ScrollTrigger.create({
-      trigger: '.steps-pinned',
-      start: 'top top',
-      onEnter: () => {
-        if (!scrollLocked) {
-          scrollLocked = true;
-          document.body.style.overflow = 'hidden';
-          setTimeout(() => {
-            document.body.style.overflow = '';
-            scrollLocked = false;
-          }, 1000);
-        }
-      },
-      once: false
-    });
+    let lastSnap = -1;
+    function lockScroll() {
+      if (!scrollLocked) {
+        scrollLocked = true;
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          document.body.style.overflow = '';
+          scrollLocked = false;
+        }, 1000);
+      }
+    }
 
     const stepsTl = gsap.timeline({
       scrollTrigger: {
@@ -939,7 +935,22 @@
           duration: { min: 0.8, max: 1.2 },
           delay: 0.1,
           ease: 'power1.inOut',
-          inertia: false
+          inertia: false,
+          onComplete: (self) => {
+            const snap = Math.round(self.progress * 2) / 2;
+            if (snap !== lastSnap) {
+              lastSnap = snap;
+              lockScroll();
+            }
+          }
+        },
+        onUpdate: (self) => {
+          const snap = Math.round(self.progress * 2) / 2;
+          const diff = Math.abs(self.progress - snap);
+          if (diff < 0.01 && snap !== lastSnap) {
+            lastSnap = snap;
+            lockScroll();
+          }
         }
       }
     });
