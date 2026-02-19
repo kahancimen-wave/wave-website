@@ -909,12 +909,12 @@
     const stepPanels = document.querySelectorAll('.step-panel');
     const phoneScreens = document.querySelectorAll('.phone-screen');
 
-    /* Scroll-Lock: 1 Sekunde bei jedem Schrittwechsel (nur vorwärts) */
+    /* Scroll-Lock: 1 Sekunde bei jedem Schrittwechsel */
     let scrollLocked = false;
     let lastSnap = -1;
-    let scrollDirection = 1;
+    let enteredFromBottom = false;
     function lockScroll() {
-      if (!scrollLocked && scrollDirection > 0) {
+      if (!scrollLocked) {
         scrollLocked = true;
         document.body.style.overflow = 'hidden';
         setTimeout(() => {
@@ -932,8 +932,8 @@
         pin: true,
         scrub: 0.3,
         snap: {
-          snapTo: (progress, self) => {
-            if (self.direction < 0) return progress;
+          snapTo: (progress) => {
+            if (enteredFromBottom && progress > 0.9) return 1;
             const snaps = [0, 0.5, 1];
             let closest = snaps[0];
             let minDist = Math.abs(progress - snaps[0]);
@@ -948,15 +948,29 @@
           ease: 'power1.inOut',
           inertia: false
         },
+        onEnterBack: () => {
+          enteredFromBottom = true;
+          lastSnap = 1;
+        },
+        onEnter: () => {
+          enteredFromBottom = false;
+          lastSnap = -1;
+        },
+        onLeave: () => {
+          enteredFromBottom = false;
+        },
+        onLeaveBack: () => {
+          enteredFromBottom = false;
+        },
         onUpdate: (self) => {
-          scrollDirection = self.direction;
-          if (self.direction > 0) {
-            const snap = Math.round(self.progress * 2) / 2;
-            const diff = Math.abs(self.progress - snap);
-            if (diff < 0.01 && snap !== lastSnap) {
-              lastSnap = snap;
-              lockScroll();
-            }
+          if (enteredFromBottom && self.progress < 0.95) {
+            enteredFromBottom = false;
+          }
+          const snap = Math.round(self.progress * 2) / 2;
+          const diff = Math.abs(self.progress - snap);
+          if (diff < 0.01 && snap !== lastSnap && !enteredFromBottom) {
+            lastSnap = snap;
+            lockScroll();
           }
         }
       }
