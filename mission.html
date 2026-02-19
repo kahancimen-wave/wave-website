@@ -15,10 +15,10 @@
       font-family: 'Poppins', sans-serif;
       color: #334155;
       background-color: #FFFFFF;
-      background-image: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
       -webkit-font-smoothing: antialiased;
     }
 
+    /* --- Navigation --- */
     nav {
       position: fixed;
       top: 0;
@@ -40,9 +40,6 @@
       font-weight: 400;
       color: #64748B;
       text-decoration: none;
-      letter-spacing: 0;
-      display: flex;
-      align-items: center;
     }
 
     .nav-links {
@@ -59,9 +56,7 @@
       transition: color 0.2s;
     }
 
-    .nav-links a:hover {
-      color: #1E293B;
-    }
+    .nav-links a:hover { color: #1E293B; }
 
     .nav-toggle {
       display: none;
@@ -82,22 +77,15 @@
       transition: transform 0.3s, opacity 0.3s;
     }
 
-    .nav-toggle.active span:first-child {
-      transform: translateY(4px) rotate(45deg);
-    }
-
-    .nav-toggle.active span:last-child {
-      transform: translateY(-4px) rotate(-45deg);
-    }
+    .nav-toggle.active span:first-child { transform: translateY(4px) rotate(45deg); }
+    .nav-toggle.active span:last-child { transform: translateY(-4px) rotate(-45deg); }
 
     .nav-overlay {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(232, 244, 252, 0.97);
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      background: rgba(255,255,255,0.97);
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
       z-index: 99;
@@ -107,9 +95,7 @@
       gap: 32px;
     }
 
-    .nav-overlay.active {
-      display: flex;
-    }
+    .nav-overlay.active { display: flex; }
 
     .nav-overlay a {
       font-family: 'Poppins', sans-serif;
@@ -117,74 +103,133 @@
       font-weight: 400;
       color: #1E293B;
       text-decoration: none;
-      transition: color 0.2s;
     }
 
-    .nav-overlay a:hover {
-      color: #64748B;
+    .nav-overlay a:hover { color: #64748B; }
+
+    /* --- Hero --- */
+    .mission-hero {
+      padding: 200px 24px 120px;
+      text-align: center;
+      background: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
     }
 
-    .content {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 140px 24px 80px;
-    }
-
-    .content h1 {
+    .mission-hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 36px;
+      font-size: clamp(36px, 6vw, 56px);
       font-weight: 400;
       color: #1E293B;
-      margin-bottom: 12px;
+      margin-bottom: 24px;
     }
 
-    .content .subtitle {
-      font-size: 16px;
+    .mission-hero p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 3vw, 22px);
       color: #64748B;
-      font-weight: 300;
-      line-height: 1.7;
-      margin-bottom: 48px;
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
 
-    .content h2 {
-      font-size: 18px;
+    /* --- Sections --- */
+    .mission-section {
+      padding: 120px 24px;
+    }
+
+    .mission-section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .mission-eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #94A3B8;
+      margin-bottom: 24px;
+    }
+
+    .mission-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 400;
       color: #1E293B;
-      margin-top: 40px;
-      margin-bottom: 12px;
+      line-height: 1.5;
+      max-width: 600px;
     }
 
-    .content p, .content li {
-      font-size: 15px;
+    .mission-text {
+      font-size: 17px;
       color: #64748B;
-      line-height: 1.7;
+      line-height: 1.8;
       font-weight: 300;
-      margin-bottom: 12px;
+      max-width: 600px;
+      margin-top: 24px;
     }
 
+    /* --- Section with Image --- */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .mission-grid.reverse .mission-img-col { order: -1; }
+
+    .mission-img-col img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    /* --- Footer --- */
     footer {
       padding: 48px 40px;
       border-top: 1px solid #F1F5F9;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 24px;
     }
 
     .footer-copy {
       font-size: 13px;
       color: #CBD5E1;
-      width: 100%;
       text-align: center;
-      margin-top: 16px;
+    }
+
+    /* --- Animations --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    /* --- Mobile --- */
+    @media (max-width: 900px) {
+      .mission-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .mission-grid.reverse .mission-img-col { order: 0; }
+
+      .mission-img-col img {
+        height: 320px;
+      }
     }
 
     @media (max-width: 640px) {
       nav { padding: 8px 20px; }
       .nav-links { display: none; }
       .nav-toggle { display: flex; }
-      footer { padding: 32px 20px; flex-direction: column; text-align: center; }
+      .mission-hero { padding: 140px 20px 80px; }
+      .mission-section { padding: 80px 20px; }
+      footer { padding: 32px 20px; }
+
+      .mission-img-col img {
+        height: 260px;
+      }
     }
   </style>
 </head>
@@ -211,14 +256,85 @@
     <a href="/support">Support</a>
   </div>
 
-  <main class="content">
-    <h1>Mission</h1>
-    <p class="subtitle">Hier entsteht bald etwas.</p>
-  </main>
+  <!-- Hero -->
+  <section class="mission-hero">
+    <h1 class="fade-in">Unsere Mission</h1>
+    <p class="fade-in">Menschen mit den richtigen Menschen zusammenbringen.</p>
+  </section>
+
+  <!-- Unsere Vision -->
+  <section class="mission-section">
+    <div class="mission-section-inner">
+      <p class="mission-eyebrow fade-in">Unsere Vision</p>
+      <p class="mission-heading fade-in">Wir wünschen uns für jeden Menschen, dass er von dem sozialen Kreis umgeben ist, den er braucht, um wirklich glücklich zu sein.</p>
+      <p class="mission-text fade-in">Ob Lebenspartner, enge Freunde oder eine lockere Bekanntschaft.</p>
+    </div>
+  </section>
+
+  <!-- Der Ursprung -->
+  <section class="mission-section" style="background: #FAFBFC;">
+    <div class="mission-section-inner">
+      <div class="mission-grid">
+        <div>
+          <p class="mission-eyebrow fade-in">Der Ursprung</p>
+          <p class="mission-heading fade-in">Dieser Wunsch entstand aus einer persönlichen Motivation: einen Partner zu finden, mit dem man voraussichtlich ein Leben lang glücklich sein kann.</p>
+          <p class="mission-text fade-in">Das hat uns dazu gebracht, tiefer zu graben.</p>
+        </div>
+        <div class="mission-img-col fade-in">
+          <img src="mission-ursprung.jpg" alt="Zwei Menschen beim Kaffee">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Die Wissenschaft -->
+  <section class="mission-section">
+    <div class="mission-section-inner">
+      <p class="mission-eyebrow fade-in">Die Wissenschaft</p>
+      <p class="mission-heading fade-in">Unser Team hat in der Forschung nach Antworten gesucht. Ist es möglich, Kompatibilität zwischen Menschen vorherzusagen?</p>
+      <p class="mission-text fade-in">Wir sind auf eine komplexe Methode gestoßen, die genau das kann. Daraus haben wir einen Algorithmus entwickelt und in eine App gebaut, damit jeder so einfach wie möglich darauf zugreifen kann.</p>
+    </div>
+  </section>
+
+  <!-- Die Zukunft -->
+  <section class="mission-section" style="background: #FAFBFC;">
+    <div class="mission-section-inner">
+      <div class="mission-grid reverse">
+        <div>
+          <p class="mission-eyebrow fade-in">Die Zukunft</p>
+          <p class="mission-heading fade-in">Unser Algorithmus kann nicht nur romantische Beziehungen vorhersagen. Jede Art von Verbindung lässt sich damit berechnen.</p>
+          <p class="mission-text fade-in">Unser Ziel: In Zukunft in den Bereichen Liebe, Sexualität, Freundschaft und beruflichem Umfeld von Menschen umgeben zu sein, die auf derselben Wellenlänge sind.</p>
+        </div>
+        <div class="mission-img-col fade-in">
+          <img src="mission-zukunft.jpg" alt="Zukunft">
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer>
     <p class="footer-copy">&copy; 2026 Wave. Alle Rechte vorbehalten.</p>
   </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.fade-in').forEach(el => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
