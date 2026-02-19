@@ -948,9 +948,9 @@
           ease: 'power1.inOut',
           inertia: false
         },
-        onEnterBack: () => {
+        onEnterBack: (self) => {
           enteredFromBottom = true;
-          lastSnap = 1;
+          window.scrollTo({ top: self.start - 1 });
         },
         onEnter: () => {
           enteredFromBottom = false;
@@ -963,12 +963,10 @@
           enteredFromBottom = false;
         },
         onUpdate: (self) => {
-          if (enteredFromBottom && self.progress < 0.95) {
-            enteredFromBottom = false;
-          }
+          if (enteredFromBottom) return;
           const snap = Math.round(self.progress * 2) / 2;
           const diff = Math.abs(self.progress - snap);
-          if (diff < 0.01 && snap !== lastSnap && !enteredFromBottom) {
+          if (diff < 0.01 && snap !== lastSnap) {
             lastSnap = snap;
             lockScroll();
           }
