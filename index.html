@@ -602,22 +602,30 @@
       }
 
       .steps-pinned-inner {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         gap: 20px;
         padding: 0 20px;
       }
 
       .steps-phone-col {
-        flex: 0 0 42vw;
+        flex: none;
+        width: 55vw;
       }
 
       .phone-img {
-        width: 42vw;
+        width: 55vw;
       }
 
       .steps-text-col {
         transform: none;
-        height: 160px;
-        align-self: center;
+        height: 100px;
+        text-align: center;
+      }
+
+      .step-panel p {
+        margin: 0 auto;
       }
 
       .step-number {
