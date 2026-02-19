@@ -909,11 +909,12 @@
     const stepPanels = document.querySelectorAll('.step-panel');
     const phoneScreens = document.querySelectorAll('.phone-screen');
 
-    /* Scroll-Lock: 1 Sekunde bei jedem Schrittwechsel */
+    /* Scroll-Lock: 1 Sekunde bei jedem Schrittwechsel (nur vorwärts) */
     let scrollLocked = false;
     let lastSnap = -1;
+    let scrollDirection = 1;
     function lockScroll() {
-      if (!scrollLocked) {
+      if (!scrollLocked && scrollDirection > 0) {
         scrollLocked = true;
         document.body.style.overflow = 'hidden';
         setTimeout(() => {
@@ -931,25 +932,31 @@
         pin: true,
         scrub: 0.3,
         snap: {
-          snapTo: [0, 0.5, 1],
+          snapTo: (progress, self) => {
+            if (self.direction < 0) return progress;
+            const snaps = [0, 0.5, 1];
+            let closest = snaps[0];
+            let minDist = Math.abs(progress - snaps[0]);
+            for (let i = 1; i < snaps.length; i++) {
+              const dist = Math.abs(progress - snaps[i]);
+              if (dist < minDist) { minDist = dist; closest = snaps[i]; }
+            }
+            return closest;
+          },
           duration: { min: 0.8, max: 1.2 },
           delay: 0.1,
           ease: 'power1.inOut',
-          inertia: false,
-          onComplete: (self) => {
+          inertia: false
+        },
+        onUpdate: (self) => {
+          scrollDirection = self.direction;
+          if (self.direction > 0) {
             const snap = Math.round(self.progress * 2) / 2;
-            if (snap !== lastSnap) {
+            const diff = Math.abs(self.progress - snap);
+            if (diff < 0.01 && snap !== lastSnap) {
               lastSnap = snap;
               lockScroll();
             }
-          }
-        },
-        onUpdate: (self) => {
-          const snap = Math.round(self.progress * 2) / 2;
-          const diff = Math.abs(self.progress - snap);
-          if (diff < 0.01 && snap !== lastSnap) {
-            lastSnap = snap;
-            lockScroll();
           }
         }
       }
