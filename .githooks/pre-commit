@@ -1,0 +1,23 @@
+#!/bin/sh
+# Warn-Check fuer die Wave-Website (rein statisch, kein Build-Schritt).
+#
+# Anlass 2026-08-28: Das Impressum enthaelt bewusst den Platzhalter
+# PLATZHALTER_TELEFONNUMMER. Die Seite soll damit vorerst live gehen; vor dem
+# App-Release muss die echte Nummer eingesetzt werden (Launch-Checkliste).
+#
+# Der Check WARNT nur und blockt NICHT (exit 0) — bewusst.
+#
+# Aktivieren:  git config core.hooksPath .githooks
+
+hits=$(grep -rln "PLATZHALTER_TELEFONNUMMER" -- *.html 2>/dev/null)
+if [ -n "$hits" ]; then
+  echo ""
+  echo "⚠️  WARNUNG: Platzhalter noch vorhanden — nicht releasefaehig:"
+  for f in $hits; do
+    echo "    $f: $(grep -c 'PLATZHALTER_TELEFONNUMMER' "$f") x PLATZHALTER_TELEFONNUMMER"
+  done
+  echo "    Vor dem App-Release durch die echte Telefonnummer ersetzen."
+  echo "    (Warnung, kein Abbruch — der Commit laeuft weiter.)"
+  echo ""
+fi
+exit 0
