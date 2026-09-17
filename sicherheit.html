@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sicherheit – Wave</title>
+  <meta name="description" content="Sicherheitshinweise für Treffen über Wave: worauf du vor dem ersten Treffen achten solltest.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #334155;
+      background-color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 6px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      letter-spacing: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #1E293B;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #64748B;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-toggle.active span:first-child {
+      transform: translateY(4px) rotate(45deg);
+    }
+
+    .nav-toggle.active span:last-child {
+      transform: translateY(-4px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(232, 244, 252, 0.97);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-overlay.active {
+      display: flex;
+    }
+
+    .nav-overlay a {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #1E293B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-overlay a:hover {
+      color: #64748B;
+    }
+
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 12px;
+    }
+
+    .content .subtitle {
+      font-size: 14px;
+      color: #94A3B8;
+      margin-bottom: 48px;
+    }
+
+    .content h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    .content p, .content li {
+      font-size: 15px;
+      color: #64748B;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .content ul, .content ol {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .page-hero {
+      padding: 180px 24px 60px;
+      text-align: center;
+      background: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: #94A3B8;
+    }
+
+    footer {
+      padding: 48px 40px;
+      border-top: 1px solid #F1F5F9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #94A3B8;
+      letter-spacing: 1px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #64748B;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #CBD5E1;
+      width: 100%;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 8px 20px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      footer { padding: 32px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .page-hero { padding: 120px 20px 40px; }
+    }
+    .content h3 { font-size: 15px; font-weight: 600; color: #334155; margin-top: 20px; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Wave</a>
+    <ul class="nav-links">
+      <li><a href="/mission">Mission</a></li>
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/agb">AGB</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menü" onclick="document.querySelector('.nav-toggle').classList.toggle('active');document.querySelector('.nav-overlay').classList.toggle('active');">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="nav-overlay">
+    <a href="/mission">Mission</a>
+    <a href="/datenschutz">Datenschutz</a>
+    <a href="/agb">AGB</a>
+    <a href="/impressum">Impressum</a>
+    <a href="/support">Support</a>
+  </div>
+
+  <section class="page-hero">
+    <h1>Sicher unterwegs bei Wave</h1>
+    <p class="hero-subtitle">Stand: September 2026</p>
+  </section>
+
+  <main class="content">
+
+    <p>Wave stellt dir Menschen vor. Wer sie wirklich sind, kannst nur du selbst herausfinden. Wir prüfen niemanden vorab, und wir können dir nicht sagen, ob jemand ehrlich ist.</p>
+
+    <h2>Bevor ihr euch trefft</h2>
+    <p>Nimm dir Zeit zum Schreiben. Du entscheidest selbst, wann du bereit bist.</p>
+    <p>Ein Telefonat oder ein kurzer Videoanruf vor dem Treffen sagt mehr als viele Nachrichten.</p>
+    <p>Werde misstrauisch, wenn jemand dich drängt, schnell auf einen anderen Weg zu wechseln, dich nach deiner Adresse fragt oder von Geld anfängt. Auf Geldforderungen solltest du nie eingehen, egal wie glaubwürdig die Geschichte klingt.</p>
+
+    <h2>Beim ersten Treffen</h2>
+    <p>Trefft euch an einem öffentlichen Ort, an dem andere Menschen sind.</p>
+    <p>Sag jemandem, den du kennst, wo du bist und mit wem.</p>
+    <p>Komm selbst hin und komm selbst wieder weg. Lass dich nicht abholen und nicht nach Hause fahren.</p>
+    <p>Behalte dein Getränk im Blick.</p>
+    <p>Wenn dir etwas unangenehm ist, geh. Du schuldest niemandem eine Erklärung.</p>
+
+    <h2>Deine Daten</h2>
+    <p>Gib deine Adresse, deinen Arbeitsplatz oder Bankdaten nicht heraus. Für die Verabredung reicht der Ort, den ihr im Planer festlegt.</p>
+    <p>Wave zeigt anderen deinen Standort nicht an, auch nicht als Entfernung. Der Ort wird nur intern verwendet, um zu bestimmen, wer für einen Vorschlag in Frage kommt und wo ein Treffpunkt liegen könnte.</p>
+
+    <h2>Wenn etwas passiert</h2>
+    <p>Du kannst jede Person melden, mit der du verbunden bist oder warst. Wir sehen uns jede Meldung an, und es entscheidet immer ein Mensch.</p>
+    <p>Bei einer Straftat wende dich an die Polizei. Wir helfen dir, wenn Unterlagen gebraucht werden.</p>
+
+  </main>
+
+  <footer>
+    <p class="footer-copy">&copy; 2026 Wave. Alle Rechte vorbehalten.</p>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+  gsap.from('.page-hero h1', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' });
+  gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 1, delay: 0.2, ease: 'power3.out' });
+</script>
+
+</body>
+</html>
