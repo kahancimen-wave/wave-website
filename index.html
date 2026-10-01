@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wave</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+  <link rel="apple-touch-icon" href="wave_icon.png">
+  <meta name="description" content="Wave bringt nur Menschen zusammen, die auf derselben Wellenlänge sind.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #334155;
+      background-color: #FFFFFF;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Navigation --- */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 6px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      letter-spacing: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #1E293B;
+    }
+
+    /* --- Hamburger Menu --- */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #64748B;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-toggle.active span:first-child {
+      transform: translateY(4px) rotate(45deg);
+    }
+
+    .nav-toggle.active span:last-child {
+      transform: translateY(-4px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-overlay.active {
+      display: flex;
+    }
+
+    .nav-overlay a {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #1E293B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-overlay a:hover {
+      color: #64748B;
+    }
+
+    /* --- Hero --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 220px 24px 80px;
+      background: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-waves {
+      position: absolute;
+      top: -34%;
+      left: 0;
+      width: 100%;
+      height: 110%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(120,160,220,0.12) 0%, transparent 70%);
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+      animation: glowPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    .hero > *:not(.hero-waves):not(.hero-glow) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 400;
+      color: #1E293B;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+
+    .hero .tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 3vw, 24px);
+      color: #64748B;
+      font-style: italic;
+      margin-bottom: 48px;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .badge-dark {
+      background: #1E293B;
+      color: #fff;
+    }
+
+    .badge-light {
+      background: #fff;
+      color: #1E293B;
+      border: 1px solid #E2E8F0;
+    }
+
+    /* --- Section Base --- */
+    .section {
+      padding: 120px 24px;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 400;
+      color: #1E293B;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: #64748B;
+      text-align: center;
+      font-weight: 300;
+      margin-bottom: 0;
+    }
+
+    /* --- Statement Part 1 --- */
+    .statement-1 {
+      padding: 140px 24px;
+      background: #FFFFFF;
+    }
+
+    .statement-1-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .statement-1-eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #94A3B8;
+      margin-bottom: 40px;
+    }
+
+    .statement-1-lead {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 400;
+      color: #1E293B;
+      line-height: 1.4;
+      max-width: 750px;
+      margin-bottom: 48px;
+    }
+
+    .statement-1-follow {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 400;
+      color: #64748B;
+      line-height: 1.5;
+      max-width: 500px;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    /* --- Statement Part 2 --- */
+    .statement-2 {
+      padding: 140px 24px;
+      background: #FFFFFF;
+    }
+
+    .statement-2-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .statement-2-eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #94A3B8;
+      margin-bottom: 24px;
+    }
+
+    .statement-2-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 400;
+      color: #1E293B;
+      line-height: 1.5;
+    }
+
+    .statement-2-right {
+      padding-top: 40px;
+    }
+
+    .statement-2-punch {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 400;
+      color: #1E293B;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .statement-2-close {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(17px, 2vw, 20px);
+      font-weight: 400;
+      font-style: italic;
+      color: #64748B;
+      line-height: 1.8;
+    }
+
+    /* --- Text Reveal (word by word) --- */
+    .reveal-text .word {
+      display: inline-block;
+      opacity: 0.12;
+      will-change: opacity;
+    }
+
+    /* --- Steps Header --- */
+    .steps-header {
+      padding: 120px 24px 60px;
+      background: #FFFFFF;
+    }
+
+    /* --- Steps Pinned Section --- */
+    .steps-pinned {
+      height: 100vh;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .steps-pinned-inner {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      gap: 80px;
+    }
+
+    .steps-phone-col {
+      flex: 0 0 min(380px, 39vh);
+    }
+
+    .phone-img {
+      width: min(380px, 39vh);
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
+    }
+
+    .phone-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 40px;
+    }
+
+    .steps-text-col {
+      flex: 1;
+      position: relative;
+      height: 180px;
+      align-self: center;
+      transform: translateY(-180px);
+    }
+
+    .step-panel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+    }
+
+    .step-panel.active {
+      opacity: 1;
+    }
+
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 400;
+      color: #94A3B8;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .step-panel h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-bottom: 16px;
+    }
+
+    .step-panel p {
+      font-size: 17px;
+      color: #64748B;
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 400px;
+    }
+
+    /* --- CTA Section (dark) --- */
+    .cta {
+      background: #1E293B;
+      text-align: center;
+    }
+
+    .cta .section-title {
+      color: #FFFFFF;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta p {
+      font-size: 16px;
+      color: #94A3B8;
+      font-weight: 300;
+      margin-bottom: 40px;
+    }
+
+    .badge-white {
+      background: #FFFFFF;
+      color: #1E293B;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .badge-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,255,255,0.15);
+    }
+
+    /* --- Footer (professional, multi-column) --- */
+    footer {
+      background: #0F172A;
+      padding: 80px 40px 40px;
+      color: #94A3B8;
+    }
+
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: #FFFFFF;
+      letter-spacing: 1px;
+    }
+
+    .footer-brand p {
+      font-size: 14px;
+      color: #64748B;
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-column h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-column a {
+      font-size: 14px;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-column a:hover {
+      color: #FFFFFF;
+    }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-bottom-links a {
+      font-size: 13px;
+      color: #475569;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-bottom-links a:hover {
+      color: #94A3B8;
+    }
+
+    /* --- Base for GSAP animations --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    /* --- Mobile --- */
+    @media (max-width: 900px) {
+      .statement-1-follow {
+        margin-left: 0;
+        text-align: left;
+      }
+
+      .statement-2-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .statement-2-right {
+        padding-top: 0;
+      }
+
+      .steps-pinned-inner {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 0 20px;
+      }
+
+      .steps-phone-col {
+        flex: none;
+        width: 62vw;
+        margin-top: 60px;
+      }
+
+      .phone-img {
+        width: 62vw;
+      }
+
+      .steps-text-col {
+        transform: none;
+        height: 120px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .step-panel {
+        width: 100%;
+      }
+
+      .step-panel p {
+        margin: 0 auto;
+        max-width: 100%;
+      }
+
+      .step-number {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .step-panel h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .step-panel p {
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .steps-header {
+        padding: 60px 20px 30px;
+      }
+
+      .hero-waves {
+        top: -18%;
+        left: -30%;
+        width: 160%;
+        height: 80%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 8px 20px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+
+      .section { padding: 80px 20px; }
+      .statement-1, .statement-2 { padding: 80px 20px; }
+      .steps-header { padding: 80px 20px 40px; }
+
+      .hero { padding: 200px 20px 80px; }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      footer { padding: 60px 20px 32px; }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="/" class="nav-logo">Wave</a>
+    <ul class="nav-links">
+      <li><a href="/mission">Mission</a></li>
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/sicherheit">Sicherheit</a></li>
+      <li><a href="/agb">AGB</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menü" onclick="document.querySelector('.nav-toggle').classList.toggle('active');document.querySelector('.nav-overlay').classList.toggle('active');">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="nav-overlay">
+    <a href="/mission">Mission</a>
+    <a href="/datenschutz">Datenschutz</a>
+    <a href="/sicherheit">Sicherheit</a>
+    <a href="/agb">AGB</a>
+    <a href="/impressum">Impressum</a>
+    <a href="/support">Support</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-waves" id="waveLottie"></div>
+    <div class="hero-glow"></div>
+    <h1>Wave</h1>
+    <p class="tagline">Immer auf derselben Wellenlänge</p>
+    <div class="hero-badges">
+      <a href="#" class="badge badge-dark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        App Store
+      </a>
+      <a href="#" class="badge badge-light">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.04L14.46 12 3.18.96c-.36.28-.58.71-.58 1.2v19.68c0 .49.22.92.58 1.2zm1.83 1.02l12.7-7.32-2.82-2.82-9.88 10.14zm15.56-11.44l-3.48-2.01-3.04 3.04 3.04 3.04 3.48-2.01c.66-.38.66-1.68 0-2.06zM5.01.94l9.88 10.14 2.82-2.82L5.01.94z"/></svg>
+        Google Play
+      </a>
+    </div>
+  </section>
+
+  <!-- Part 1 -->
+  <section class="statement-1">
+    <div class="statement-1-inner">
+      <p class="statement-1-eyebrow fade-in">Was ist Wave</p>
+      <p class="statement-1-lead reveal-text">Wave ist ein Kompatibilitätssystem.</p>
+      <p class="statement-1-follow reveal-text">Es berechnet, welche zwei Menschen zueinander passen, und stellt sie einander vor. Genau eine Person, exklusiv. Ohne dass du suchst.</p>
+    </div>
+  </section>
+
+  <!-- Part 2 -->
+  <section class="statement-2">
+    <div class="statement-2-inner">
+      <div>
+        <p class="statement-2-eyebrow fade-in">Das Verfahren</p>
+        <p class="statement-2-heading reveal-text">Wave erfasst Verhalten auf drei Ebenen: was dich antreibt, wie du mit Belastung umgehst und wie du auf Fremde wirkst. Daraus und aus deinen weiteren Angaben berechnet das System eine Klassifikation, die nur auf dich zutrifft. Zwei Klassifikationen ergeben zusammen eine eindeutige Antwort: kompatibel oder nicht. Ihr werdet einander erst vorgestellt, wenn diese Antwort ja lautet.</p>
+      </div>
+      <div class="statement-2-right">
+        <p class="statement-2-punch reveal-text">Kein Swipen. Kein Suchen. Kein Zufall.</p>
+        <p class="statement-2-close reveal-text">Lerne nur jemanden kennen, der auf deiner Wellenlänge ist.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Steps Header -->
+  <section class="steps-header">
+    <div class="section-inner">
+      <h2 class="section-title fade-in">So einfach geht's</h2>
+    </div>
+  </section>
+
+  <!-- Steps Pinned -->
+  <section class="steps-pinned">
+    <div class="steps-pinned-inner">
+      <div class="steps-phone-col">
+        <div class="phone-img" style="position:relative;">
+          <img class="phone-screen active" src="screen-step2.png?v=3" alt="App Screenshot Schritt 1" style="position:absolute;top:0;left:0;width:100%;transition:opacity 0.5s ease;">
+          <img class="phone-screen" src="screen-step1.png?v=4" alt="App Screenshot Schritt 2" style="position:absolute;top:0;left:0;width:100%;opacity:0;transition:opacity 0.5s ease;">
+          <img class="phone-screen" src="screen-step3.png?v=4" alt="App Screenshot Schritt 3" style="position:absolute;top:0;left:0;width:100%;opacity:0;transition:opacity 0.5s ease;">
+          <img src="screen-step2.png?v=3" alt="" style="width:100%;visibility:hidden;">
+        </div>
+      </div>
+      <div class="steps-text-col">
+        <div class="step-panel active">
+          <p class="step-number">01</p>
+          <h3>Profil erstellen</h3>
+          <p>Beantworte einige Fragen zu deinem Verhalten in bestimmten Situationen.</p>
+        </div>
+        <div class="step-panel">
+          <p class="step-number">02</p>
+          <h3>Das System arbeitet</h3>
+          <p>Wave berechnet im Hintergrund die Kompatibilität mit anderen Nutzern, ohne dass du etwas tun musst.</p>
+        </div>
+        <div class="step-panel">
+          <p class="step-number">03</p>
+          <h3>Kennenlernen</h3>
+          <p>Sobald eine Kompatibilität erkannt wird, werdet ihr einander exklusiv vorgestellt. Zeit, sich kennenzulernen. Ganz einfach mit unserem Date-Planer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA (dunkel) -->
+  <section class="section cta">
+    <div class="section-inner">
+      <h2 class="section-title fade-in">Bereit für jemanden auf deiner Wellenlänge?</h2>
+      <p class="fade-in">Lade Wave herunter, melde dich an und überlass den Rest uns.</p>
+      <div class="fade-in">
+        <a href="#" class="badge-white">Jetzt herunterladen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-brand-name">Wave</span>
+        <p>Bringt nur Menschen zusammen, die auf derselben Wellenlänge sind.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Produkt</h4>
+        <ul>
+          <li><a href="/mission">Mission</a></li>
+          <li><a href="#">App Store</a></li>
+          <li><a href="#">Google Play</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="/datenschutz">Datenschutz</a></li>
+          <li><a href="/sicherheit">Sicherheit</a></li>
+          <li><a href="/agb">AGB</a></li>
+          <li><a href="/impressum">Impressum</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/support">Hilfe & Kontakt</a></li>
+          <li><a href="mailto:support@wave-network.de">E-Mail</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Wave. Alle Rechte vorbehalten.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="/datenschutz">Datenschutz</a></li>
+        <li><a href="/sicherheit">Sicherheit</a></li>
+        <li><a href="/agb">AGB</a></li>
+        <li><a href="/impressum">Impressum</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    /* --- Lottie Wave Animation --- */
+    const waveAnim = lottie.loadAnimation({
+      container: document.getElementById('waveLottie'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'waves.json',
+      rendererSettings: {
+        preserveAspectRatio: 'none',
+        progressiveLoad: true
+      }
+    });
+    waveAnim.setSpeed(0.4);
+    waveAnim.setSubframe(true);
+
+    /* --- GSAP Setup --- */
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* --- Fade-In Animations --- */
+    gsap.utils.toArray('.fade-in').forEach(el => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    /* --- Text Reveal (word by word on scroll) --- */
+    document.querySelectorAll('.reveal-text').forEach(el => {
+      const words = el.textContent.trim().split(/\s+/);
+      el.innerHTML = words.map(w => '<span class="word">' + w + '</span>').join(' ');
+
+      gsap.to(el.querySelectorAll('.word'), {
+        opacity: 1,
+        stagger: 0.04,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          end: 'top 30%',
+          scrub: true,
+        }
+      });
+    });
+
+    /* --- Steps: Pinned Section with Snap --- */
+    const stepPanels = document.querySelectorAll('.step-panel');
+    const phoneScreens = document.querySelectorAll('.phone-screen');
+
+    /* Scroll-Lock: 1 Sekunde bei jedem Schrittwechsel */
+    let scrollLocked = false;
+    let lastSnap = -1;
+    let enteredFromBottom = false;
+    function lockScroll() {
+      if (!scrollLocked) {
+        scrollLocked = true;
+        const prevent = (e) => e.preventDefault();
+        document.addEventListener('touchmove', prevent, { passive: false });
+        document.addEventListener('wheel', prevent, { passive: false });
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          document.removeEventListener('touchmove', prevent);
+          document.removeEventListener('wheel', prevent);
+          document.body.style.overflow = '';
+          scrollLocked = false;
+        }, 1000);
+      }
+    }
+
+    const stepsTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.steps-pinned',
+        start: 'top top',
+        end: '+=200%',
+        pin: true,
+        scrub: 0.3,
+        snap: {
+          snapTo: (progress) => {
+            if (enteredFromBottom && progress > 0.9) return 1;
+            const snaps = [0, 0.5, 1];
+            let closest = snaps[0];
+            let minDist = Math.abs(progress - snaps[0]);
+            for (let i = 1; i < snaps.length; i++) {
+              const dist = Math.abs(progress - snaps[i]);
+              if (dist < minDist) { minDist = dist; closest = snaps[i]; }
+            }
+            return closest;
+          },
+          duration: { min: 0.8, max: 1.2 },
+          delay: 0.1,
+          ease: 'power1.inOut',
+          inertia: false
+        },
+        onEnterBack: (self) => {
+          enteredFromBottom = true;
+          window.scrollTo({ top: self.start - 1 });
+        },
+        onEnter: () => {
+          enteredFromBottom = false;
+          lastSnap = -1;
+        },
+        onLeave: () => {
+          enteredFromBottom = false;
+        },
+        onLeaveBack: () => {
+          enteredFromBottom = false;
+        },
+        onUpdate: (self) => {
+          if (enteredFromBottom) return;
+          const snap = Math.round(self.progress * 2) / 2;
+          const diff = Math.abs(self.progress - snap);
+          if (diff < 0.01 && snap !== lastSnap) {
+            lastSnap = snap;
+            lockScroll();
+          }
+        }
+      }
+    });
+
+    stepsTl
+      .to(stepPanels[0], { opacity: 0, y: -40, duration: 0.4, ease: 'power3.inOut' })
+      .to(phoneScreens[0], { opacity: 0, duration: 0.4, ease: 'power3.inOut' }, '<')
+      .to(stepPanels[1], { opacity: 1, y: 0, duration: 0.5, ease: 'back.out(1.4)' }, '<0.2')
+      .to(phoneScreens[1], { opacity: 1, duration: 0.5, ease: 'back.out(1.4)' }, '<')
+      .to({}, { duration: 0.3 })
+      .to(stepPanels[1], { opacity: 0, y: -40, duration: 0.4, ease: 'power3.inOut' })
+      .to(phoneScreens[1], { opacity: 0, duration: 0.4, ease: 'power3.inOut' }, '<')
+      .to(stepPanels[2], { opacity: 1, y: 0, duration: 0.5, ease: 'back.out(1.4)' }, '<0.2')
+      .to(phoneScreens[2], { opacity: 1, duration: 0.5, ease: 'back.out(1.4)' }, '<');
+
+    gsap.set(stepPanels[0], { opacity: 1, y: 0 });
+    gsap.set(stepPanels[1], { opacity: 0, y: 40 });
+    gsap.set(stepPanels[2], { opacity: 0, y: 40 });
+    gsap.set(phoneScreens[0], { opacity: 1 });
+    gsap.set(phoneScreens[1], { opacity: 0 });
+    gsap.set(phoneScreens[2], { opacity: 0 });
+
+    /* --- Hero Parallax --- */
+    gsap.to('.hero h1', {
+      y: -50,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    gsap.to('.hero .tagline', {
+      y: -30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    gsap.to('.hero-badges', {
+      y: -10,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: '60% top',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission – Wave</title>
+  <meta name="description" content="Warum wir Wave gebaut haben und was wir daran messen.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #334155;
+      background-color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Navigation --- */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 6px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #1E293B; }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #64748B;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-toggle.active span:first-child { transform: translateY(4px) rotate(45deg); }
+    .nav-toggle.active span:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-overlay.active { display: flex; }
+
+    .nav-overlay a {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #1E293B;
+      text-decoration: none;
+    }
+
+    .nav-overlay a:hover { color: #64748B; }
+
+    /* --- Hero --- */
+    .mission-hero {
+      padding: 200px 24px 120px;
+      text-align: center;
+      background: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
+    }
+
+    .mission-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 24px;
+    }
+
+    .mission-hero p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 3vw, 22px);
+      color: #64748B;
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* --- Sections --- */
+    .mission-section {
+      padding: 120px 24px;
+    }
+
+    .mission-section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .mission-eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #94A3B8;
+      margin-bottom: 24px;
+    }
+
+    .mission-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 400;
+      color: #1E293B;
+      line-height: 1.5;
+      max-width: 600px;
+    }
+
+    .mission-text {
+      font-size: 17px;
+      color: #64748B;
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 600px;
+      margin-top: 24px;
+    }
+
+    /* --- Section with Image --- */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .mission-grid.reverse .mission-img-col { order: -1; }
+
+    .mission-img-col img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    /* --- Footer --- */
+    footer {
+      padding: 48px 40px;
+      border-top: 1px solid #F1F5F9;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #CBD5E1;
+      text-align: center;
+    }
+
+    /* --- Animations --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    /* --- Mobile --- */
+    @media (max-width: 900px) {
+      .mission-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .mission-grid.reverse .mission-img-col { order: 0; }
+
+      .mission-img-col img {
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 8px 20px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .mission-hero { padding: 140px 20px 80px; }
+      .mission-section { padding: 80px 20px; }
+      footer { padding: 32px 20px; }
+
+      .mission-img-col img {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Wave</a>
+    <ul class="nav-links">
+      <li><a href="/mission">Mission</a></li>
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/sicherheit">Sicherheit</a></li>
+      <li><a href="/agb">AGB</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menü" onclick="document.querySelector('.nav-toggle').classList.toggle('active');document.querySelector('.nav-overlay').classList.toggle('active');">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="nav-overlay">
+    <a href="/mission">Mission</a>
+    <a href="/datenschutz">Datenschutz</a>
+    <a href="/sicherheit">Sicherheit</a>
+    <a href="/agb">AGB</a>
+    <a href="/impressum">Impressum</a>
+    <a href="/support">Support</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="mission-hero">
+    <h1 class="fade-in">Unsere Mission</h1>
+    <p class="fade-in">Nur Menschen zusammenbringen, die auf derselben Wellenlänge sind. Nicht möglichst viele.</p>
+  </section>
+
+  <!-- Abschnitt 1 — Das Problem -->
+  <section class="mission-section">
+    <div class="mission-section-inner">
+      <p class="mission-eyebrow fade-in">Das Problem</p>
+      <p class="mission-heading fade-in">Wen ein Mensch kennenlernt, entscheidet fast immer der Zufall. Arbeitsplatz, Freundeskreis, Nachbarschaft. Aus diesem willkürlichen Ausschnitt wählen die meisten die wichtigsten Verbindungen ihres Lebens.</p>
+      <p class="mission-text fade-in">Ob jemand passt, zeigt sich dabei erst spät. Die ersten Wochen sagen wenig aus. Sichtbar wird es nach Monaten: wie zwei Menschen mit Belastung umgehen, wie viel Nähe der eine braucht und wie viel der andere geben kann.</p>
+      <p class="mission-text fade-in">Wie sehr das wiegt, ist untersucht. Die Qualität enger Beziehungen sagt Gesundheit und Zufriedenheit im späteren Leben zuverlässiger vorher als Einkommen, Herkunft oder Intelligenz.</p>
+      <p class="mission-text fade-in">Digitale Angebote haben das Problem nicht gelöst. Sie haben den Ausschnitt vergrößert, die eigentliche Aufgabe aber nicht angefasst. Das hat zwei Gründe. Erstens das Geschäftsmodell: Wer über Abonnements verdient, verdient an der Dauer der Suche, nicht an ihrem Ende. Optimiert wird die Zahl der Kontakte, nicht ihre Passung. Zweitens fehlte ein Verfahren, das die Aufgabe hätte lösen können. Wer nach wenigen Vorschlägen entlässt, muss diese Vorschläge treffen. Solange das niemand konnte, war Menge nicht nur die profitablere Strategie, sondern die einzig verfügbare.</p>
+    </div>
+  </section>
+
+  <!-- Abschnitt 2 — Der Ursprung -->
+  <section class="mission-section" style="background: #FAFBFC;">
+    <div class="mission-section-inner">
+      <div class="mission-grid">
+        <div>
+          <p class="mission-eyebrow fade-in">Der Ursprung</p>
+          <p class="mission-heading fade-in">Wave ist aus einer persönlichen Frage entstanden. Wie findet man den einen Menschen, mit dem man über Jahre die bessere Version seiner selbst wird?</p>
+          <p class="mission-text fade-in">Die Antwort war unbequem. Es liegt selten daran, dass jemand nicht gut genug ist. Es liegt daran, dass zwei Menschen unterschiedlich funktionieren. Der eine zieht sich unter Druck zurück, der andere sucht dann Nähe. Der eine braucht Zeit, um sich zu öffnen, der andere hält Zurückhaltung für Desinteresse. Beide verhalten sich normal. Zusammen entsteht trotzdem ein Muster, das sich mit gutem Willen nicht auflösen lässt.</p>
+          <p class="mission-text fade-in">Das bleibt nicht folgenlos. In der falschen Konstellation werden beide zu einer schlechteren Version ihrer selbst. Misstrauischer, ungeduldiger, stiller. In der richtigen passiert das Gegenteil: Konflikte eskalieren nicht, und über Jahre wird man sicherer statt müder.</p>
+          <p class="mission-text fade-in">Daraus wurde die Idee, nicht nach Übereinstimmung zu suchen, sondern Unvereinbarkeit auszuschließen.</p>
+        </div>
+        <div class="mission-img-col fade-in">
+          <img src="mission-ursprung.jpg" alt="Zwei Menschen beim Kaffee">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abschnitt 3 — Wie Wave arbeitet -->
+  <section class="mission-section">
+    <div class="mission-section-inner">
+      <p class="mission-eyebrow fade-in">Wie Wave arbeitet</p>
+      <p class="mission-heading fade-in">Wave ist ein Kompatibilitätssystem, kein Marktplatz.</p>
+      <p class="mission-text fade-in">Wave erfasst Verhalten auf drei Ebenen: was dich antreibt, wie du mit Belastung umgehst und wie du auf Fremde wirkst. Daraus und aus deinen weiteren Angaben berechnet das System eine Klassifikation, die nur auf dich zutrifft. Zwei Klassifikationen ergeben zusammen eine eindeutige Antwort: kompatibel oder nicht.</p>
+      <p class="mission-text fade-in">Du suchst nicht, du filterst nicht, du wählst nicht aus. Nach der einmaligen Erhebung wird das System aktiv und du passiv. Es gibt keinen Katalog, keine Suchfunktion, keine Profilübersicht. Du siehst zu keinem Zeitpunkt, wer sonst dabei ist.</p>
+      <p class="mission-text fade-in">Ist eine Person gefunden, bekommst du genau einen Vorschlag. Nur diesen. Solange er besteht, entsteht kein weiterer.</p>
+      <p class="mission-text fade-in">Dir bleibt eine Entscheidung: ob du diese Person kennenlernen möchtest. Alles, was ein Profil ohnehin nicht beantwortet, hat das System vorher geprüft.</p>
+      <p class="mission-text fade-in">Das System bringt dich zu der Person, die zu dir passt, vorausgesetzt sie ist im Netzwerk.</p>
+    </div>
+  </section>
+
+  <!-- Abschnitt 4 — Was wir beweisen wollen -->
+  <section class="mission-section" style="background: #FAFBFC;">
+    <div class="mission-section-inner">
+      <p class="mission-eyebrow fade-in">Was wir beweisen wollen</p>
+      <p class="mission-heading fade-in">Für kein Zuordnungsverfahren am Markt existiert ein Wirksamkeitsnachweis, der wissenschaftlichen Standards genügt. Für keines. Die Branche verspricht seit über einem Jahrzehnt Passung, ohne sie je belegt zu haben.</p>
+      <p class="mission-text fade-in">Wir sind überzeugt, dass unser Verfahren funktioniert. Überzeugung ist kein Beweis. Deshalb messen wir es.</p>
+      <p class="mission-text fade-in">Bei jeder Verbindung erheben wir, was daraus geworden ist. Nach dem ersten Treffen, in den Wochen danach, nach Monaten. Beide Seiten getrennt. Auch die, die nicht antworten, zählen wir mit. Wer nach einem enttäuschenden Abend schweigt, ist der häufigste Fall, und ohne ihn sieht jede Statistik besser aus als die Wirklichkeit.</p>
+      <p class="mission-text fade-in">Von diesem Ergebnis hängt alles Weitere ab.</p>
+    </div>
+  </section>
+
+  <!-- Abschnitt 5 — Unsere Vision -->
+  <section class="mission-section">
+    <div class="mission-section-inner">
+      <div class="mission-grid reverse">
+        <div>
+          <p class="mission-eyebrow fade-in">Unsere Vision</p>
+          <p class="mission-heading fade-in">Die Frage, welche zwei Menschen zueinander passen, stellt sich nicht nur bei der Partnersuche. Sie stellt sich bei Freundschaften, für die es im Erwachsenenalter kaum ein Angebot gibt. Und im Beruf, wo täglich Menschen zusammenarbeiten sollen, deren Passung niemand geprüft hat.</p>
+          <p class="mission-text fade-in">Dasselbe Verfahren, dieselbe Frage. Wir fangen bei der schwierigsten Variante an.</p>
+          <p class="mission-text fade-in">Unser Ziel ist, dass Menschen von Beziehungen umgeben sind, die sie stärker machen. Nicht von solchen, die sie über Jahre auslaugen und in denen beide Seiten glauben, es liege an ihnen. Wenn Passung der Normalfall wird statt des Glücksfalls, verändert das mehr als die Partnersuche.</p>
+        </div>
+        <div class="mission-img-col fade-in">
+          <img src="mission-zukunft.jpg" alt="Unsere Vision">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abschnitt 6 — Unser Versprechen -->
+  <section class="mission-section" style="background: #FAFBFC;">
+    <div class="mission-section-inner">
+      <p class="mission-eyebrow fade-in">Unser Versprechen</p>
+      <p class="mission-heading fade-in">Wir verdienen daran, dass du dein Ziel erreichst, nicht daran, wie lange du suchst.</p>
+      <p class="mission-text fade-in">Kein Abonnement, keine Zusatzkäufe, keine künstlich verlängerte Suche. Wenn du gefunden hast, was du gesucht hast, bist du fertig.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p class="footer-copy">&copy; 2026 Wave. Alle Rechte vorbehalten.</p>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.fade-in').forEach(el => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support – Wave</title>
+  <meta name="description" content="Hilfe und Support für Wave.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #334155;
+      background-color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 6px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      letter-spacing: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #1E293B;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #64748B;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-toggle.active span:first-child {
+      transform: translateY(4px) rotate(45deg);
+    }
+
+    .nav-toggle.active span:last-child {
+      transform: translateY(-4px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(232, 244, 252, 0.97);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-overlay.active {
+      display: flex;
+    }
+
+    .nav-overlay a {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #1E293B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-overlay a:hover {
+      color: #64748B;
+    }
+
+    .page-hero {
+      padding: 180px 24px 60px;
+      text-align: center;
+      background: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: #94A3B8;
+    }
+
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 12px;
+    }
+
+    .content .subtitle {
+      font-size: 16px;
+      color: #64748B;
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .content h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    .content p, .content li {
+      font-size: 15px;
+      color: #64748B;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .content ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, #E8F4FC, #F0F4F8);
+      border-radius: 16px;
+      padding: 32px;
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .contact-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-bottom: 8px;
+    }
+
+    .contact-card p {
+      text-align: center;
+    }
+
+    .contact-card a {
+      color: #80C4E9;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #F1F5F9;
+      padding: 20px 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-item h3 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1E293B;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      margin-bottom: 0;
+    }
+
+    footer {
+      padding: 48px 40px;
+      border-top: 1px solid #F1F5F9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #94A3B8;
+      letter-spacing: 1px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #64748B;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #CBD5E1;
+      width: 100%;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 8px 20px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .page-hero { padding: 120px 20px 40px; }
+      footer { padding: 32px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Wave</a>
+    <ul class="nav-links">
+      <li><a href="/mission">Mission</a></li>
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/sicherheit">Sicherheit</a></li>
+      <li><a href="/agb">AGB</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menü" onclick="document.querySelector('.nav-toggle').classList.toggle('active');document.querySelector('.nav-overlay').classList.toggle('active');">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="nav-overlay">
+    <a href="/mission">Mission</a>
+    <a href="/datenschutz">Datenschutz</a>
+    <a href="/sicherheit">Sicherheit</a>
+    <a href="/agb">AGB</a>
+    <a href="/impressum">Impressum</a>
+    <a href="/support">Support</a>
+  </div>
+
+  <section class="page-hero">
+    <h1>Support</h1>
+    <p class="hero-subtitle">Wir helfen dir gerne weiter.</p>
+  </section>
+
+  <main class="content">
+
+    <h2>Häufige Fragen</h2>
+
+    <div class="faq-item">
+      <h3>Wie funktioniert das Matching bei Wave?</h3>
+      <p>Unser Verfahren wertet deine Angaben und deine Antworten aus dem Fragebogen aus, um dir Vorschläge zu machen, die wirklich zu dir passen. Je vollständiger dein Profil ist, desto besser werden deine Vorschläge.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Kann ich mein Konto löschen?</h3>
+      <p>Ja, du kannst dein Konto jederzeit über die App-Einstellungen löschen. Dein Konto und deine Profildaten werden innerhalb von 30 Tagen gelöscht. Einzelne Daten müssen wir aus rechtlichen Gründen befristet aufbewahren; welche das sind und wie lange, steht in unserer Datenschutzerklärung.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Was bedeuten die optionalen Felder?</h3>
+      <p>Felder unter „Was ist dir noch wichtig?" sind optional. Wähle nur aus, was dir bei deinem Match wirklich wichtig ist. Felder ohne Auswahl bedeuten, dass du offen für alles bist.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Wie kann ich einen Nutzer melden?</h3>
+      <p>Wenn dir jemand unangenehm auffällt, kannst du die Person über das Menü im Chat melden. Bei einem geplanten Date geht das auch über das Menü in der Date-Ansicht. Du kannst uns außerdem jederzeit über den Support schreiben und dort das Thema Meldung/Belästigung wählen. Jede Meldung wird geprüft.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Ist Wave kostenlos?</h3>
+      <p>Die Grundfunktionen von Wave sind kostenlos nutzbar.</p>
+    </div>
+
+    <div class="contact-card">
+      <h3>Noch Fragen?</h3>
+      <p>Schreib uns eine E-Mail und wir melden uns so schnell wie möglich bei dir.</p>
+      <p><a href="mailto:support@wave-network.de">support@wave-network.de</a></p>
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer-copy">&copy; 2026 Wave. Alle Rechte vorbehalten.</p>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+  gsap.from('.page-hero h1', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' });
+  gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 1, delay: 0.2, ease: 'power3.out' });
+</script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutzerklärung – Wave</title>
+  <meta name="description" content="Datenschutzerklärung von Wave.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #334155;
+      background-color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 6px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      letter-spacing: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #1E293B;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #64748B;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-toggle.active span:first-child {
+      transform: translateY(4px) rotate(45deg);
+    }
+
+    .nav-toggle.active span:last-child {
+      transform: translateY(-4px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(232, 244, 252, 0.97);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-overlay.active {
+      display: flex;
+    }
+
+    .nav-overlay a {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #1E293B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-overlay a:hover {
+      color: #64748B;
+    }
+
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 12px;
+    }
+
+    .content .subtitle {
+      font-size: 14px;
+      color: #94A3B8;
+      margin-bottom: 48px;
+    }
+
+    .content h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    .content p, .content li {
+      font-size: 15px;
+      color: #64748B;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .content ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .page-hero {
+      padding: 180px 24px 60px;
+      text-align: center;
+      background: linear-gradient(170deg, #E8F4FC 0%, #F0F4F8 30%, #FFFEF8 70%, #FDF8F0 100%);
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      color: #1E293B;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: #94A3B8;
+    }
+
+    footer {
+      padding: 48px 40px;
+      border-top: 1px solid #F1F5F9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #94A3B8;
+      letter-spacing: 1px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #64748B;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #CBD5E1;
+      width: 100%;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 8px 20px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      footer { padding: 32px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .page-hero { padding: 120px 20px 40px; }
+    }
+
+    .content h3 { font-size: 15px; font-weight: 600; color: #334155; margin-top: 20px; margin-bottom: 6px; }
+    .content h4 { font-size: 14px; font-weight: 600; color: #475569; margin-top: 18px; margin-bottom: 6px; }
+    .table-wrap { overflow-x: auto; margin: 0 0 16px; -webkit-overflow-scrolling: touch; }
+    .content table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .content th, .content td { border: 1px solid #E2E8F0; padding: 8px 10px; text-align: left; vertical-align: top; color: #64748B; font-weight: 300; line-height: 1.5; }
+    .content th { background: #F8FAFC; font-weight: 500; color: #475569; }
+    .recipient { border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+    .recipient strong { display: block; color: #475569; font-weight: 500; font-size: 15px; margin-bottom: 6px; }
+    .recipient p { margin: 0 0 4px; font-size: 14px; line-height: 1.5; }
+    .recipient .label { color: #94A3B8; }
+    .ph { background: #FEF3C7; color: #92400E; font-style: normal; padding: 0 4px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Wave</a>
+    <ul class="nav-links">
+      <li><a href="/mission">Mission</a></li>
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/sicherheit">Sicherheit</a></li>
+      <li><a href="/agb">AGB</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menü" onclick="document.querySelector('.nav-toggle').classList.toggle('active');document.querySelector('.nav-overlay').classList.toggle('active');">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="nav-overlay">
+    <a href="/mission">Mission</a>
+    <a href="/datenschutz">Datenschutz</a>
+    <a href="/sicherheit">Sicherheit</a>
+    <a href="/agb">AGB</a>
+    <a href="/impressum">Impressum</a>
+    <a href="/support">Support</a>
+  </div>
+
+  <section class="page-hero">
+    <h1>Datenschutzerklärung</h1>
+    <p class="hero-subtitle">Stand: September 2026</p>
+  </section>
+
+  <main class="content">
+    <h2>1. Verantwortlicher</h2>
+    <p>Verantwortlich für die Datenverarbeitung ist:<br>
+    Kahan Cimen<br>
+    Hermannstraße 229<br>
+    12049 Berlin<br>
+    E-Mail: support@wave-network.de</p>
+    <p>Wave befindet sich derzeit in einer geschlossenen Testphase. Eine Gesellschaft besteht noch nicht; die Verantwortlichkeit liegt bei der oben genannten natürlichen Person. Nach Gründung geht die Verantwortlichkeit auf die Gesellschaft über; wir informieren dich rechtzeitig darüber.</p>
+
+    <h2>2. Welche Daten wir erheben</h2>
+    <h3>2.1 Kontodaten</h3>
+    <p>E-Mail-Adresse, Name, Geburtsdatum, Geburtsort, Geschlecht.</p>
+    <p>Deinen Geburtsort wandeln wir einmalig in Koordinaten um. Diese fließen in deine Klassifikation ein. Dafür übermitteln wir den Ortsnamen an OpenStreetMap (Nominatim), siehe Ziffer 6.</p>
+    <h3>2.2 Profilangaben</h3>
+    <p>Fotos, Körpermerkmale (Größe, Haarfarbe, Augenfarbe, Haartyp), Sprachen, Angaben zu Studium und Rauchen.</p>
+    <h3>2.3 Angaben zu deinen Präferenzen</h3>
+    <p>Gesuchtes Geschlecht, Altersspanne, Beziehungstyp, Kinderwunsch, Sprachen, Entfernung sowie weitere optionale Kriterien.</p>
+    <h3>2.4 Antworten aus dem Fragebogen</h3>
+    <p>Deine Antworten auf die Fragen zu deinem Verhalten in bestimmten Situationen. Aus diesen Antworten, einzelnen der unter 2.1, 2.2 und 2.3 genannten Angaben sowie einer Einschätzung deiner Fotos bestimmen wir, welche Personen dir vorgeschlagen werden. Die Einzelheiten des Verfahrens und die Gewichtung legen wir nicht offen; sie sind Betriebsgeheimnis.</p>
+    <p>Die Einschätzung deiner Fotos wird derzeit durch den Anbieter vorgenommen und nicht automatisiert berechnet. Sie ist weder für dich noch für andere sichtbar und wird nicht an dein Gerät übermittelt. Die Grundlage der Zuordnung verändert sich im Laufe der Nutzung, etwa wenn eine Verbindung endet.</p>
+    <h3>2.5 Besondere Kategorien personenbezogener Daten (Art. 9 DSGVO)</h3>
+    <p>Folgende Angaben sind <strong>freiwillig</strong> und werden ausschließlich auf Grundlage deiner <strong>ausdrücklichen, gesonderten und jederzeit widerrufbaren Einwilligung</strong> verarbeitet:</p>
+    <ul>
+      <li><strong>Hautton</strong> (ethnische Herkunft)</li>
+      <li><strong>Kultureller Hintergrund</strong> (ethnische Herkunft)</li>
+      <li><strong>Religion</strong></li>
+    </ul>
+    <p>Diese Angaben wirken ausschließlich auf die <strong>Reihenfolge</strong> von Vorschlägen. Sie führen zu keinem Zeitpunkt zum Ausschluss anderer Personen. Machst du diese Angaben nicht, entstehen dir keine Nachteile bei der Nutzung.</p>
+    <p>Deine Einwilligung wird für jede Kategorie einzeln eingeholt. Erteilung und Widerruf werden mit Zeitstempel protokolliert. Bei Widerruf werden die betroffenen Angaben unverzüglich gelöscht.</p>
+    <h3>2.6 Standortdaten</h3>
+    <p>Zur Bestimmung der Entfernung zwischen Personen verarbeiten wir Koordinaten deines Wohn- oder Aufenthaltsorts. Diese werden nicht laufend erhoben, sondern beruhen auf deiner Angabe beziehungsweise einer einmaligen Standortbestimmung.</p>
+    <p><strong>Wie genau wir speichern.</strong> Deinen Aufenthaltsort speichern wir gerundet, auf etwa 100 Meter genau. Den genauen Punkt bewahren wir nicht auf. Für die Entfernung zwischen zwei Menschen reicht diese Genauigkeit aus.</p>
+    <p><strong>Woher die Koordinaten deines Wohnorts stammen.</strong> Sie werden aus dem Ortsnamen abgeleitet, den du selbst angegeben hast. Koordinaten deines Geräts übernehmen wir dafür nicht. Für diese Umwandlung – und umgekehrt, wenn wir aus deinem gerundeten Aufenthaltsort einen Ortsnamen gewinnen – nutzen wir OpenStreetMap (Nominatim); näheres unter Ziffer 6.</p>
+    <p><strong>Prüfung der Angabe.</strong> Damit niemand eine falsche Entfernung vortäuscht, prüfen wir zwei Dinge:</p>
+    <ul>
+      <li>Dein Gerät meldet mit, ob eine Ortsangabe von einer Anwendung zur Standortsimulation stammt. Wird uns das gemeldet, übernehmen wir die Angabe nicht.</li>
+      <li>Wechselt dein Ort schneller, als es physisch möglich wäre – etwa von Berlin nach Tokio in wenigen Sekunden –, halten wir das fest. Die Angabe übernehmen wir dabei trotzdem. Der Vermerk ist ein Hinweis zum Nachsehen, keine Entscheidung über dich.</li>
+    </ul>
+    <p><strong>Es entsteht keine Bewegungshistorie.</strong> Wir führen keinen Verlauf deiner Aufenthaltsorte. Verglichen werden immer nur der zuletzt gespeicherte und der neue Wert, und der zuletzt gespeicherte wird dabei überschrieben. Zum Vermerk selbst speichern wir keine Koordinaten, sondern nur die Entfernung und die verstrichene Zeit.</p>
+    <h3>2.7 Kommunikationsdaten</h3>
+    <p>Geschriebene Nachrichten, die du innerhalb der Anwendung mit einer dir vorgeschlagenen Person austauschst, sowie Angaben zu vereinbarten Treffen.</p>
+    <p>Wird dir eine Nachricht zugestellt, enthält der Hinweis auf deinem Gerät die ersten 200 Zeichen ihres Textes. Näheres unter Ziffer 2.11, „Benachrichtigungen mit Inhalt“.</p>
+    <h3>2.8 Sprachnachrichten</h3>
+    <p>Du kannst statt einer geschriebenen Nachricht eine Sprachnachricht aufnehmen. Gespeichert wird dabei die Tonaufnahme selbst, dazu ihre Länge, der Zeitpunkt und wer sie an wen geschickt hat. Eine Aufnahme dauert höchstens drei Minuten.</p>
+    <p>Wir werten den Ton nicht aus. Es findet keine Umwandlung in Text statt, keine inhaltliche Analyse und keine Erkennung von Sprache oder Sprecher. Wir erstellen kein Stimmprofil und gleichen nichts ab. Die Aufnahme wird gespeichert und wieder abgespielt, sonst nichts.</p>
+    <p>Anhören kann sie ausschließlich die eine Person, mit der du verbunden bist. Endet die Verbindung, ist die Aufnahme für beide Seiten nicht mehr abrufbar.</p>
+    <p>Für die Löschung gilt dasselbe wie für geschriebene Nachrichten: Die Aufnahme wird spätestens 90 Tage nach Auflösung der Verbindung gelöscht – der Ton selbst, nicht nur der Verweis darauf.</p>
+    <p>Führt eine Meldung zu einer Sperrung, kann eine Aufnahme als Beweismittel in die Akte zu dieser Sperrung aufgenommen werden. Dort wird sie drei Jahre aufbewahrt und danach gelöscht.</p>
+    <h3>2.9 Rückmeldungen zu Treffen</h3>
+    <p>Wenn eine Verbindung zu einem persönlichen Treffen geführt hat, fragen wir dich nach dessen Verlauf. Die Antworten der beiden beteiligten Personen werden getrennt erhoben und einander zu keinem Zeitpunkt angezeigt. Für die Auswertung werden sie zu einem gemeinsamen Ergebnis des Paares zusammengefasst. Dafür speichern wir eine verschlüsselte Kennung des Paares, die keine Namen oder Kontodaten enthält.</p>
+    <h3>2.10 Nutzungs- und Gerätedaten</h3>
+    <p>Geräteinformationen, Version der Anwendung, technische Fehlerberichte.</p>
+    <h3>2.11 Erhaltung der Erreichbarkeit</h3>
+    <p>Damit dich ein Vorschlag erreicht, braucht dein Gerät eine gültige Kennung für Benachrichtigungen. Diese Kennung wird von Apple beziehungsweise Google vergeben und verfällt, wenn eine Installation längere Zeit keinen Kontakt hatte. Weil Wave bewusst selten Vorschläge macht, ist es der Normalfall, dass die App wochenlang nicht geöffnet wird – die Kennung würde verfallen und du wärst unbemerkt nicht mehr erreichbar.</p>
+    <p>Um das zu verhindern, senden wir einmal täglich eine stille Benachrichtigung an Geräte, deren Kennung älter als eine Woche ist. <strong>Das geschieht ohne dein Zutun</strong> und ist für dich nicht wahrnehmbar: kein Text, kein Ton, keine Anzeige. Sie weckt allein die App, damit diese ihre Kennung erneuert. Übermittelt wird bei dieser stillen Benachrichtigung ausschließlich die Gerätekennung, kein Inhalt.</p>
+    <p>Ob eine solche Benachrichtigung den Verfall tatsächlich aufhält, sichert uns kein Anbieter zu. Ist die Kennung bereits ungültig – etwa nach dem Wiederherstellen aus einer Sicherung –, ist dein Gerät erst wieder erreichbar, wenn du die App selbst öffnest.</p>
+
+    <h4>Benachrichtigungen mit Inhalt</h4>
+    <p>Neben der stillen Benachrichtigung senden wir Hinweise, die auf deinem Gerät sichtbar erscheinen: bei einer neuen Nachricht, bei einem neuen Vorschlag, wenn jemand ein Treffen planen möchte, wenn ein Termin feststeht, wenn eine vorgeschlagene Person absagt, wenn ein Kontakt beendet wird und bei Antworten des Supports.</p>
+    <p>Vier dieser Hinweise enthalten den Vornamen der anderen Person: die neue Nachricht, der Wunsch nach einem Treffen, die Absage und das Ende eines Kontakts. Bei einer neuen Nachricht enthalten sie zusätzlich die ersten 200 Zeichen des Nachrichtentextes. Der Hinweis auf einen neuen Vorschlag, der Hinweis auf einen feststehenden Termin und die Antwort des Supports enthalten weder einen Namen noch sonstige Angaben zu einer Person.</p>
+    <p>Für die Zustellung werden Titel und Text an Google (Firebase Cloud Messaging) beziehungsweise Apple übermittelt. Je nach Einstellung deines Geräts erscheinen sie auch auf dem gesperrten Bildschirm und sind dann für Personen in deiner Nähe sichtbar. Ob und wie Vorschauen angezeigt werden, kannst du in den Einstellungen deines Geräts festlegen.</p>
+
+    <h3>2.12 Erfolg der Vermittlung</h3>
+    <p>Wenn du dein Konto pausierst oder löschst und es eine Person gibt, mit der du verbunden warst, stellen wir dir eine Frage mit Ja oder Nein: ob diese Person der Grund für deinen Schritt ist. Wir zeigen dabei ihren Vornamen und ihr Foto, damit du weißt, um wen es geht. <strong>Diese Frage lässt sich nicht überspringen</strong> – du kannst den Vorgang aber jederzeit abbrechen, dann wird nichts gespeichert und dein Konto bleibt, wie es ist. Die Frage nach dem <em>Grund</em> für deinen Ausstieg, die danach folgen kann, ist dagegen freiwillig und überspringbar.</p>
+    <p>Wir halten fest, wie du geantwortet hast, auf welche Verbindung sich die Frage bezog und wie viele Verbindungen du bis dahin hattest. Was zwischen euch vorgefallen ist, erfassen wir nicht.</p>
+    <p><strong>Auch die genannte Person wird festgehalten</strong> – über dieselbe verschlüsselte Kennung des Paares, die wir schon für die Rückmeldungen zu Treffen verwenden (Ziffer 2.9), und zusätzlich über ihre Kontokennung, solange ihr Konto besteht. Sie erfährt weder, dass wir dich gefragt haben, noch was du geantwortet hast. Ein Hinweis erreicht sie nicht.</p>
+    <p>Wir brauchen diese Angabe, weil sie das Einzige ist, woran sich ablesen lässt, ob das Verfahren tut, wofür es gedacht ist. Ohne sie wüssten wir nur, wie viele Vorschläge wir gemacht haben – nicht, ob einer davon zu etwas geführt hat.</p>
+    <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO, berechtigtes Interesse an der Überprüfung und Verbesserung der Wirksamkeit des Zuordnungsverfahrens.</p>
+    <p>Ob für diese Angabe Art. 6 Abs. 1 lit. f genügt, hängt an einer Frage, die wir anwaltlich klären lassen: Aus deinem eigenen Geschlecht und dem gesuchten Geschlecht ergibt sich mittelbar deine sexuelle Orientierung. Sollte diese Kombination als besondere Kategorie im Sinne von Art. 9 DSGVO zu behandeln sein, gilt das auch für den hier festgehaltenen Erfolg – denn er verbindet zwei Menschen miteinander. Wir würden die Verarbeitung dann auf eine ausdrückliche Einwilligung nach Art. 9 Abs. 2 lit. a umstellen oder einstellen.</p>
+    <p><strong>Dein Widerspruchsrecht:</strong> Weil wir uns hier auf ein berechtigtes Interesse stützen, kannst du der Verarbeitung nach Art. 21 DSGVO jederzeit widersprechen. Ein formloser Hinweis an die in Ziffer 1 genannte Adresse genügt; du musst ihn nicht begründen. Wir entfernen den Eintrag dann, sofern dem keine zwingenden schutzwürdigen Gründe entgegenstehen.</p>
+
+    <h2>3. Zwecke der Verarbeitung</h2>
+    <ul>
+      <li>Bereitstellung und Betrieb der Anwendung</li>
+      <li>Erstellung deines Profils und Berechnung deiner Klassifikation</li>
+      <li>Ermittlung und Ausspielung von Vorschlägen</li>
+      <li>Kommunikation zwischen verbundenen Personen</li>
+      <li>Überprüfung und Verbesserung der Wirksamkeit des Verfahrens</li>
+      <li>Sicherheit, Missbrauchsprävention und Durchsetzung der Nutzungsbedingungen</li>
+      <li>Bearbeitung von Meldungen über andere Personen</li>
+      <li>Erhaltung der Erreichbarkeit deines Geräts für Benachrichtigungen</li>
+    </ul>
+
+    <h2>4. Rechtsgrundlagen</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Verarbeitung</th><th>Rechtsgrundlage</th></tr></thead>
+      <tbody>
+        <tr><td>Konto, Profil, Präferenzen, Vorschläge, Kommunikation</td><td>Art. 6 Abs. 1 lit. b DSGVO – Vertragserfüllung</td></tr>
+        <tr><td>Hautton, kultureller Hintergrund, Religion</td><td>Art. 9 Abs. 2 lit. a DSGVO – ausdrückliche Einwilligung</td></tr>
+        <tr><td>Rückmeldungen zu Treffen</td><td>Art. 6 Abs. 1 lit. f DSGVO, berechtigtes Interesse an der Überprüfung und Verbesserung der Wirksamkeit des Zuordnungsverfahrens</td></tr>
+        <tr><td>Erfolg der Vermittlung</td><td>Art. 6 Abs. 1 lit. f DSGVO, berechtigtes Interesse an der Überprüfung und Verbesserung der Wirksamkeit des Zuordnungsverfahrens</td></tr>
+        <tr><td>Meldungen über andere Personen</td><td>Art. 6 Abs. 1 lit. f DSGVO – berechtigtes Interesse, zusammen mit unseren Pflichten aus Art. 16 des Digitale-Dienste-Gesetzes der EU</td></tr>
+        <tr><td>Fehlerberichte, Sicherheit, Missbrauchsprävention</td><td>Art. 6 Abs. 1 lit. f DSGVO – berechtigtes Interesse</td></tr>
+        <tr><td>Verteilung der Testphase über die App-Stores</td><td>Art. 6 Abs. 1 lit. b DSGVO</td></tr>
+        <tr><td>Einschätzung der Profilfotos für die Zuordnung</td><td>Art. 6 Abs. 1 lit. b DSGVO, Vertragserfüllung</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>5. Zuordnung</h2>
+    <p>Wave ordnet Personen einander mithilfe eines automatisierten Verfahrens zu. Aus deinen Angaben und deinen Fragebogenantworten wird eine Klassifikation berechnet; anhand definierter Kriterien wird geprüft, welche Personen als Vorschlag in Frage kommen. Die Zuordnung ist derzeit nicht vollständig automatisiert: Ein Teil der Grundlage, auf der sie beruht, wird durch den Anbieter festgelegt und nicht berechnet.</p>
+    <p>Diese Zuordnung entfaltet keine rechtliche Wirkung und beeinträchtigt dich nicht in vergleichbarer Weise im Sinne von Art. 22 Abs. 1 DSGVO. Ob du eine vorgeschlagene Person kennenlernen möchtest, entscheidest ausschließlich du selbst.</p>
+    <p>Die Kriterien und die interne Methodik der Zuordnung sind Betriebsgeheimnis und werden nicht offengelegt. Welche Angaben in die Zuordnung einfließen, ergibt sich aus Ziffer 2 dieser Erklärung.</p>
+
+    <h2>6. Empfänger</h2>
+    <p>Deine Daten werden nicht verkauft. Eine Weitergabe erfolgt ausschließlich an folgende Auftragsverarbeiter und Empfänger:</p>
+    <div class="recipient"><strong>Supabase</strong><p><span class="label">Zweck:</span> Datenbank, Authentifizierung, Dateispeicher, Serverfunktionen</p><p><span class="label">Übermittelte Daten:</span> alle in Ziffer 2 genannten Daten</p><p><span class="label">Ort:</span> EU (Stockholm, Schweden). Supabase setzt eigene Unterauftragsverarbeiter ein, unter anderem für Hosting und Support; ein Zugriff aus Drittländern ist im Supportfall möglich. Grundlage sind Standardvertragsklauseln nach Art. 46 Abs. 2 lit. c DSGVO. Die vollständige Liste stellen wir auf Anfrage zur Verfügung.</p></div>
+    <div class="recipient"><strong>Google Cloud Vision</strong><p><span class="label">Zweck:</span> Automatisierte Prüfung hochgeladener Fotos auf unzulässige Inhalte</p><p><span class="label">Übermittelte Daten:</span> deine Profilfotos</p><p><span class="label">Ort:</span> USA</p></div>
+    <div class="recipient"><strong>Google Places</strong><p><span class="label">Zweck:</span> Vorschläge für Orte bei der Vereinbarung eines Treffens</p><p><span class="label">Übermittelte Daten:</span> ungefähres Gebiet des geplanten Treffens</p><p><span class="label">Ort:</span> USA</p></div>
+    <div class="recipient"><strong>Google (Firebase Cloud Messaging)</strong><p><span class="label">Zweck:</span> Versand von Benachrichtigungen</p><p><span class="label">Übermittelte Daten:</span> Gerätekennung für Benachrichtigungen sowie Titel und Text der Benachrichtigung, darunter der Vorname der anderen Person, bei Nachrichten die ersten 200 Zeichen des Nachrichtentextes</p><p><span class="label">Ort:</span> USA</p></div>
+    <div class="recipient"><strong>Google (Firebase Crashlytics)</strong><p><span class="label">Zweck:</span> Technische Fehlerberichte bei Abstürzen</p><p><span class="label">Übermittelte Daten:</span> Fehlerbericht, Geräteinformationen</p><p><span class="label">Ort:</span> USA</p></div>
+    <div class="recipient"><strong>Google (Play Console)</strong><p><span class="label">Zweck:</span> Verteilung der geschlossenen Testphase für Android</p><p><span class="label">Übermittelte Daten:</span> deine E-Mail-Adresse</p><p><span class="label">Ort:</span> USA</p></div>
+    <div class="recipient"><strong>Google (Anmeldung)</strong><p><span class="label">Zweck:</span> Anmeldung mit Google-Konto, sofern genutzt</p><p><span class="label">Übermittelte Daten:</span> Kennung deines Google-Kontos</p><p><span class="label">Ort:</span> USA</p></div>
+    <div class="recipient"><strong>Apple</strong><p><span class="label">Zweck:</span> Benachrichtigungen, Anmeldung mit Apple-Konto, Verteilung der Testphase über TestFlight</p><p><span class="label">Übermittelte Daten:</span> Gerätekennung, Kennung deines Apple-Kontos, deine E-Mail-Adresse sowie Titel und Text der Benachrichtigung, darunter der Vorname der anderen Person, bei Nachrichten die ersten 200 Zeichen des Nachrichtentextes</p><p><span class="label">Ort:</span> USA</p></div>
+    <div class="recipient"><strong>OpenStreetMap (Nominatim)</strong><p><span class="label">Zweck:</span> Umwandlung von Ortsnamen in Koordinaten und umgekehrt</p><p><span class="label">Übermittelte Daten:</span> Ortsname, darunter der angegebene Geburtsort und der Wohnort; sowie gerundete Koordinaten des ungefähren Aufenthaltsorts</p><p><span class="label">Ort:</span> Deutschland</p></div>
+    <div class="recipient"><strong>Resend</strong><p><span class="label">Zweck:</span> Versand von Sicherheitscodes an Administratoren</p><p><span class="label">Übermittelte Daten:</span> betrifft keine Nutzerdaten</p><p><span class="label">Ort:</span> USA</p></div>
+    <p><strong>Hinweis zur Fotoprüfung.</strong> Jedes von dir hochgeladene Foto wird automatisiert auf unzulässige Inhalte geprüft. Dafür wird das Foto an Google Cloud Vision übermittelt. Die Prüfung dient ausschließlich der Erkennung unzulässiger Inhalte; eine Identifizierung von Personen findet dabei nicht statt. Das Foto wird von uns weiterhin ausschließlich bei Supabase gespeichert.</p>
+    <p><strong>Hinweis zu den App-Stores.</strong> Apple und Google verarbeiten die für die Verteilung der Testphase übermittelte E-Mail-Adresse als eigenständig Verantwortliche und nicht in unserem Auftrag. Für diese Verarbeitung gelten die Datenschutzhinweise des jeweiligen Anbieters. Gleiches gilt für die Anmeldung mit einem Google- oder Apple-Konto, soweit du sie nutzt.</p>
+
+    <p><strong>Übermittlung in Drittländer.</strong> Einige der genannten Empfänger verarbeiten Daten in den Vereinigten Staaten. Grundlage der Übermittlung ist der Angemessenheitsbeschluss der Europäischen Kommission zum EU-US Data Privacy Framework beziehungsweise – soweit dieser nicht greift – Standardvertragsklauseln nach Art. 46 Abs. 2 lit. c DSGVO.</p>
+
+    <h2>7. Meldungen und Sperren</h2>
+    <p><strong>Wenn du jemanden meldest.</strong> Du kannst eine Person melden, mit der du verbunden bist oder warst. Dabei speichern wir deinen Meldetext, den Zeitpunkt, aus welchem Bereich der Anwendung du gemeldet hast und die Kennung der gemeldeten Person. Du erhältst unmittelbar eine Empfangsbestätigung. Wir halten außerdem fest, wann deine Meldung eingegangen ist, wann wir mit der Bearbeitung begonnen haben und wann wir entschieden haben – das ist unsere Nachweispflicht und zugleich dein Beleg, dass die Meldung bearbeitet wurde.</p>
+    <p>Führt deine Meldung zu einer Sperrung, wird sie Teil der Akte zu dieser Sperrung. Dort erscheinst du <strong>nicht mit Namen und nicht mit deiner Kennung</strong>, sondern nur unter einem Pseudonym. Dein Meldetext wird unverändert übernommen – enthält er Angaben über dich selbst, stehen sie damit auch in der Akte.</p>
+    <p><strong>Wenn du gemeldet wirst.</strong> Über eine Sperrung entscheidet immer ein Mensch, niemals ein automatisches Verfahren. Wirst du gesperrt, zeigt dir die Anwendung den Grund der Sperrung und den Zeitpunkt an, zusammen mit dem Weg, auf dem du widersprechen kannst – beim nächsten Öffnen oder spätestens bei der nächsten Anmeldung. Du kannst der Sperrung jederzeit widersprechen; wir prüfen den Widerspruch und antworten dir.</p>
+    <p><strong>Dein Konto bleibt zunächst bestehen.</strong> Nach einer Sperrung löschen wir dein Konto nicht sofort. Es bleibt <strong>30 Tage</strong> erhalten, gerechnet ab dem Tag, an dem dir die Begründung angezeigt wurde. Benutzen kannst du es in dieser Zeit nicht. Der Widerspruch ist aber noch möglich, und hat er Erfolg, bekommst du dein Konto mit deinen Daten zurück. Öffnest du die Anwendung nie wieder, sodass dir die Begründung nie angezeigt wird, löschen wir spätestens <strong>60 Tage</strong> nach der Sperrung.</p>
+    <p><strong>Nach Ablauf dieser Frist</strong> wird dein Konto gelöscht. Meldest du dich danach noch einmal an, zeigt dir die Anwendung nur noch, dass dein Konto gesperrt und gelöscht wurde, dazu unsere Kontaktadresse. Den Grund kann sie dann nicht mehr anzeigen, weil er zu deinem Konto gehörte. Erfragen kannst du ihn weiterhin: Die Akte zur Sperrung bleibt drei Jahre bestehen (Ziffer 8), und auf Anfrage an support@wave-network.de nennen wir dir den Grund und den Zeitpunkt.</p>
+    <p>Was in einer solchen Akte steht, und wie lange, steht in Ziffer 8.</p>
+
+    <h2>8. Speicherdauer und Löschung</h2>
+    <p>Deine Daten werden grundsätzlich gespeichert, solange dein Konto besteht.</p>
+    <p>Nach einer Sperrung bleibt dein Konto noch eine begrenzte Zeit bestehen und wird danach gelöscht. Die Fristen stehen in Ziffer 7.</p>
+    <p>Bei Löschung deines Kontos werden deine personenbezogenen Daten gelöscht. Von dieser Löschung ausgenommen sind die nachfolgend aufgeführten Daten. Mit ihnen geschieht dreierlei: Ein Teil wird <strong>anonymisiert</strong> – der Bezug zu deiner Person wird dabei unwiderruflich entfernt. Bei einem Teil entfernen wir <strong>deine Personenkennung</strong>, behalten aber eine verschlüsselte Kennung des Paares oder der Verbindung, damit die Auswertung zusammengeführter Antworten möglich bleibt; ein Rückschluss auf dich ist damit nicht ausgeschlossen, sondern nur erschwert. <strong>Die Einträge dieser beiden Arten bleiben unbefristet erhalten – sie verlieren den Bezug zu dir, werden aber nicht gelöscht.</strong> Ein dritter Teil wird aus den genannten Gründen <strong>befristet weiter aufbewahrt</strong>; für ihn steht die Frist in der Tabelle.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Daten</th><th>Behandlung bei Kontolöschung</th></tr></thead>
+      <tbody>
+        <tr><td>Konto, Profil, Präferenzen, Fotos, Klassifikation</td><td>vollständig gelöscht</td></tr>
+        <tr><td>Interne Einschätzung der Profilfotos</td><td>vollständig gelöscht</td></tr>
+        <tr><td>Nachrichten</td><td>Absenderangabe entfernt; Konversation gelöscht, sobald beide Konten gelöscht sind, spätestens 90 Tage nach Auflösung der Verbindung</td></tr>
+        <tr><td>Sprachnachrichten</td><td>Tonaufnahme gelöscht wie die Nachricht selbst, spätestens 90 Tage nach Auflösung der Verbindung</td></tr>
+        <tr><td>Rückmeldungen zu Treffen</td><td>Personenkennung entfernt; die Antworten bleiben über eine verschlüsselte Paar-Kennung für die Auswertung erhalten</td></tr>
+        <tr><td>Verlaufsdaten früherer Verbindungen</td><td>Personenkennung entfernt; die Verbindung bleibt über eine verschlüsselte Paar-Kennung für die Auswertung erhalten</td></tr>
+        <tr><td>Erfolg der Vermittlung</td><td>Personenkennung entfernt; der Eintrag selbst bleibt <strong>unbefristet</strong> erhalten und wird nicht gelöscht. Die Verbindung bleibt über eine verschlüsselte Paar-Kennung auswertbar</td></tr>
+        <tr><td>Nachweis der Kontolöschung</td><td>3 Jahre, zum Nachweis der ordnungsgemäßen Löschung</td></tr>
+        <tr><td>Daten zu Sperrungen (Gerät, E-Mail-Adresse, Beweismittel)</td><td>3 Jahre, zur Verhinderung der Umgehung von Sperren und zur Verteidigung gegen Rechtsansprüche. Beweismittel sind: Auszüge aus dem Nachrichtenverlauf, seit neuem auch Tonaufnahmen aus Sprachnachrichten, sowie die Meldungen, die zur Sperrung geführt haben – letztere ohne Namen und Kennung der meldenden Person. Keine Fotos.</td></tr>
+        <tr><td>Interne Bereinigungsprotokolle</td><td>3 Jahre</td></tr>
+        <tr><td>Statistische Auswertungsdaten der Testphase</td><td>enthalten keinen Personenbezug; Aufbewahrung 24 Monate</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Gesetzliche Aufbewahrungspflichten bleiben unberührt.</p>
+
+    <h2>9. Sicherheit deiner Daten</h2>
+    <p>Wir treffen technische und organisatorische Maßnahmen nach Art. 32 DSGVO. Insbesondere:</p>
+    <ul>
+      <li>Angaben nach Ziffer 2.5 (Hautton, kultureller Hintergrund, Religion) werden <strong>verschlüsselt</strong> gespeichert. Die Schlüssel werden getrennt von den Daten vorgehalten. Bei einem Sicherheitsvorfall bleiben diese Angaben für Unbefugte unlesbar.</li>
+      <li>Der Zugriff auf Daten ist auf Datenbankebene beschränkt. Nutzerkonten können ausschließlich auf die sie betreffenden Daten zugreifen. Ein administrativer Zugriff ist nur über gesonderte, protokollierte Wege möglich.</li>
+      <li>Deine Klassifikation wird ausschließlich serverseitig berechnet und nicht an dein Gerät ausgeliefert.</li>
+      <li>Die Übertragung erfolgt verschlüsselt.</li>
+    </ul>
+
+    <h2>10. Deine Rechte</h2>
+    <p>Du hast jederzeit das Recht auf:</p>
+    <ul>
+      <li><strong>Auskunft</strong> über die zu dir gespeicherten Daten (Art. 15 DSGVO)</li>
+      <li><strong>Berichtigung</strong> unrichtiger Daten (Art. 16 DSGVO)</li>
+      <li><strong>Löschung</strong> deiner Daten (Art. 17 DSGVO)</li>
+      <li><strong>Einschränkung</strong> der Verarbeitung (Art. 18 DSGVO)</li>
+      <li><strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li>
+      <li><strong>Widerspruch</strong> gegen Verarbeitungen, die auf berechtigtem Interesse beruhen (Art. 21 DSGVO)</li>
+      <li><strong>Widerruf</strong> erteilter Einwilligungen mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO)</li>
+    </ul>
+    <p>Auskunft, Datenexport und Löschung kannst du unmittelbar in der Anwendung auslösen. Alternativ wende dich an: support@wave-network.de</p>
+    <p><strong>Wenn dein Konto gesperrt ist</strong>, kannst du die Anwendung nicht mehr benutzen und deine Rechte dort nicht selbst ausüben. Wende dich in diesem Fall an support@wave-network.de. Über diese Adresse bekommst du Auskunft über deine Daten, kannst ihre Löschung verlangen und der Sperrung widersprechen.</p>
+    <p>Den Widerruf deiner Einwilligung nach Ziffer 2.5 kannst du jederzeit in den Einstellungen der Anwendung erklären. Die betroffenen Angaben werden daraufhin gelöscht.</p>
+
+    <h2>11. Geschlossene Testphase</h2>
+    <p>Wave befindet sich in einer geschlossenen Testphase. Die Teilnahme ist kostenfrei und erfolgt auf Einladung.</p>
+    <p>Für die Verteilung der Anwendung übermitteln wir deine E-Mail-Adresse an Apple beziehungsweise Google (siehe Ziffer 6).</p>
+    <p>Während der Testphase erheben wir zusätzlich statistische Daten zum Ablauf – etwa wie viele Personen einzelne Schritte der Anmeldung abschließen oder wie häufig Vorschläge angenommen werden. Diese Daten enthalten <strong>keinen Personenbezug</strong>: Sie tragen weder deine Nutzerkennung noch ein anderes Merkmal, über das du auffindbar wärst. Aus deinen Daten heraus lassen sich diese Einträge nicht ermitteln.</p>
+    <p>Die Anwendung befindet sich in Entwicklung. Es kann zu Fehlern, Unterbrechungen und in Einzelfällen zu Datenverlust kommen. Einzelheiten regeln die Teilnahmebedingungen der Testphase.</p>
+
+    <h2>12. Beschwerderecht</h2>
+    <p>Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist:<br>
+    Berliner Beauftragte für Datenschutz und Informationsfreiheit<br>
+    Alt-Moabit 59–61<br>
+    10555 Berlin<br>
+    mailbox@datenschutz-berlin.de</p>
+
+    <h2>13. Änderungen dieser Erklärung</h2>
+    <p>Wir passen diese Datenschutzerklärung an, wenn sich die Verarbeitung ändert. Die jeweils aktuelle Fassung ist auf dieser Seite abrufbar. Über wesentliche Änderungen informieren wir dich in der Anwendung.</p>
+
+  
+  </main>
+
+  <footer>
+    <p class="footer-copy">&copy; 2026 Wave. Alle Rechte vorbehalten.</p>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+  gsap.from('.page-hero h1', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' });
+  gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 1, delay: 0.2, ease: 'power3.out' });
+</script>
+
+</body>
+</html>
