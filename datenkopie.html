@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <!-- Download der Datenkopie (a148, Kahan 20.11.2026). Schluessel und Token
+       stehen nur im Fragment (#), das nie an einen Server geht; die Seite
+       entschluesselt im Browser (AES-256-GCM). Keine fremden Skripte/Schriften. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-zsbloSk5leUQ8mAR7Nz16tuAS8G2yaV2y4lAhRwP2f4='; style-src 'unsafe-inline'; img-src 'self'; connect-src https://uqydyklazfbfbsnktezx.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <title>Datenkopie | Wave</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; color: #334155; background: #fff; display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; }
+    main { max-width: 460px; width: 100%; text-align: center; }
+    h1 { font-size: 22px; font-weight: 600; color: #0f172a; margin-bottom: 12px; }
+    p { font-size: 15px; line-height: 1.5; margin-bottom: 20px; }
+    button { font: inherit; font-size: 16px; font-weight: 600; padding: 12px 24px; border: none; border-radius: 12px; background: #0f172a; color: #fff; cursor: pointer; }
+    button:disabled { background: #94a3b8; cursor: default; }
+    #status { margin-top: 20px; min-height: 24px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="titel">Deine Datenkopie von Wave</h1>
+    <p id="hinweis"></p>
+    <button id="knopf" type="button">Kopie herunterladen</button>
+    <p id="status" role="status" aria-live="polite"></p>
+  </main>
+  <script>
+(function () {
+  var EF = 'https://uqydyklazfbfbsnktezx.supabase.co/functions/v1/datenkopie-abruf';
+  var en = !/^de/i.test(navigator.language || 'de');
+  var T = en ? {
+    titel: 'Your copy of your Wave data',
+    start: 'Download copy', laedt: 'Loading part ', von: ' of ', fertig: 'Done. The file has been saved to your downloads.',
+    fertigN: 'Done. All parts have been saved to your downloads. Unpack them into the same folder.',
+    ungueltig: 'This link is invalid. Please check that you opened the complete link from the email.',
+    abgelaufen: 'This link has expired (valid for 7 days). Please contact support@waveindex.de.',
+    zu_oft: 'This link has been used too often. Please contact support@waveindex.de.',
+    fehler: 'Download failed. Please try again later or contact support@waveindex.de.',
+    entschl: 'The file could not be decrypted. Please check that you opened the complete link.',
+    hinweis: 'The copy is decrypted in your browser. Do not share this link.'
+  } : {
+    titel: 'Deine Datenkopie von Wave',
+    start: 'Kopie herunterladen', laedt: 'Lade Teil ', von: ' von ', fertig: 'Fertig. Die Datei liegt in deinen Downloads.',
+    fertigN: 'Fertig. Alle Teile liegen in deinen Downloads. Entpacke sie in denselben Ordner.',
+    ungueltig: 'Dieser Link ist ungültig. Bitte prüfe, ob du den vollständigen Link aus der Mail geöffnet hast.',
+    abgelaufen: 'Dieser Link ist abgelaufen (gültig 7 Tage). Bitte wende dich an support@waveindex.de.',
+    zu_oft: 'Dieser Link wurde zu oft verwendet. Bitte wende dich an support@waveindex.de.',
+    fehler: 'Der Download hat nicht geklappt. Bitte versuche es später erneut oder schreibe an support@waveindex.de.',
+    entschl: 'Die Datei ließ sich nicht entschlüsseln. Bitte prüfe, ob du den vollständigen Link geöffnet hast.',
+    hinweis: 'Die Kopie wird erst in deinem Browser entschlüsselt. Bitte gib diesen Link nicht weiter.'
+  };
+  document.documentElement.lang = en ? 'en' : 'de';
+  document.getElementById('titel').textContent = T.titel;
+  document.getElementById('hinweis').textContent = T.hinweis;
+  var knopf = document.getElementById('knopf');
+  var status = document.getElementById('status');
+  knopf.textContent = T.start;
+  var p = new URLSearchParams((location.hash || '').replace(/^#/, ''));
+  var token = p.get('t') || '', schluessel = p.get('k') || '';
+  // Fragment sofort aus der Adresszeile entfernen (Verlauf, Bildschirmfotos).
+  try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  var ok = /^[A-Za-z0-9_-]{43}$/;
+  if (!ok.test(token) || !ok.test(schluessel)) { status.textContent = T.ungueltig; knopf.disabled = true; return; }
+  function b64u(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; var b = atob(s), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+  async function teilHolen(n) {
+    var r = await fetch(EF, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ t: token, teil: n }), cache: 'no-store', referrerPolicy: 'no-referrer' });
+    var j = {}; try { j = await r.json(); } catch (e) {}
+    if (!r.ok || !j.ok) { throw new Error(j.grund || 'fehler'); }
+    var d = await fetch(j.url, { cache: 'no-store', referrerPolicy: 'no-referrer' });
+    if (!d.ok) throw new Error('fehler');
+    return { info: j, daten: new Uint8Array(await d.arrayBuffer()) };
+  }
+  knopf.addEventListener('click', async function () {
+    knopf.disabled = true;
+    try {
+      var key = await crypto.subtle.importKey('raw', b64u(schluessel), { name: 'AES-GCM' }, false, ['decrypt']);
+      var teile = 1, az = 'Wave';
+      for (var n = 1; n <= teile; n++) {
+        status.textContent = T.laedt + n + (teile > 1 ? T.von + teile : '') + ' …';
+        var t = await teilHolen(n);
+        teile = t.info.teile || 1; az = /^DSGVO-\d{4}-\d{4}$/.test(t.info.aktenzeichen || '') ? t.info.aktenzeichen : 'Wave';
+        if (n === 1 && teile > 1) status.textContent = T.laedt + n + T.von + teile + ' …';
+        var klar;
+        try {
+          klar = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: t.daten.slice(0, 12) }, key, t.daten.slice(12));
+        } catch (e) { status.textContent = T.entschl; return; }
+        var blob = new Blob([klar], { type: 'application/zip' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'datenkopie_' + az + (teile > 1 ? '_teil' + n + 'von' + teile : '') + '.zip';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function (u) { return function () { URL.revokeObjectURL(u); }; }(a.href), 60000);
+      }
+      status.textContent = teile > 1 ? T.fertigN : T.fertig;
+    } catch (e) {
+      var g = e && e.message;
+      status.textContent = g === 'ungueltig' ? T.ungueltig : g === 'abgelaufen' ? T.abgelaufen : g === 'zu_oft' ? T.zu_oft : T.fehler;
+      knopf.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
