@@ -8,7 +8,7 @@
   <!-- Download der Datenkopie (a148, Kahan 20.11.2026). Schluessel und Token
        stehen nur im Fragment (#), das nie an einen Server geht; die Seite
        entschluesselt im Browser (AES-256-GCM). Keine fremden Skripte/Schriften. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-zsbloSk5leUQ8mAR7Nz16tuAS8G2yaV2y4lAhRwP2f4='; style-src 'unsafe-inline'; img-src 'self'; connect-src https://uqydyklazfbfbsnktezx.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-mpmBRma6mSmIL91TfJHgt6kkFOlXIhmk+b9h3YIc/o0='; style-src 'unsafe-inline'; img-src 'self'; connect-src https://uqydyklazfbfbsnktezx.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
   <title>Datenkopie | Wave</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +34,7 @@
   var en = !/^de/i.test(navigator.language || 'de');
   var T = en ? {
     titel: 'Your copy of your Wave data',
-    start: 'Download copy', laedt: 'Loading part ', von: ' of ', fertig: 'Done. The file has been saved to your downloads.',
+    start: 'Download copy', laedt1: 'Your copy is being downloaded …', laedt: 'Loading part ', von: ' of ', fertig: 'Done. The file has been saved to your downloads.',
     fertigN: 'Done. All parts have been saved to your downloads. Unpack them into the same folder.',
     ungueltig: 'This link is invalid. Please check that you opened the complete link from the email.',
     abgelaufen: 'This link has expired (valid for 7 days). Please contact support@waveindex.de.',
@@ -44,7 +44,7 @@
     hinweis: 'The copy is decrypted in your browser. Do not share this link.'
   } : {
     titel: 'Deine Datenkopie von Wave',
-    start: 'Kopie herunterladen', laedt: 'Lade Teil ', von: ' von ', fertig: 'Fertig. Die Datei liegt in deinen Downloads.',
+    start: 'Kopie herunterladen', laedt1: 'Deine Kopie wird heruntergeladen …', laedt: 'Lade Teil ', von: ' von ', fertig: 'Fertig. Die Datei liegt in deinen Downloads.',
     fertigN: 'Fertig. Alle Teile liegen in deinen Downloads. Entpacke sie in denselben Ordner.',
     ungueltig: 'Dieser Link ist ungültig. Bitte prüfe, ob du den vollständigen Link aus der Mail geöffnet hast.',
     abgelaufen: 'Dieser Link ist abgelaufen (gültig 7 Tage). Bitte wende dich an support@waveindex.de.',
@@ -80,7 +80,9 @@
       var key = await crypto.subtle.importKey('raw', b64u(schluessel), { name: 'AES-GCM' }, false, ['decrypt']);
       var teile = 1, az = 'Wave';
       for (var n = 1; n <= teile; n++) {
-        status.textContent = T.laedt + n + (teile > 1 ? T.von + teile : '') + ' …';
+        // Ein Teil: kein „Teil 1“ (Kahan 23.11.2026); die Zahl der Teile ist erst
+        // nach dem ersten Abruf bekannt.
+        status.textContent = teile > 1 ? T.laedt + n + T.von + teile + ' …' : T.laedt1;
         var t = await teilHolen(n);
         teile = t.info.teile || 1; az = /^DSGVO-\d{4}-\d{4}$/.test(t.info.aktenzeichen || '') ? t.info.aktenzeichen : 'Wave';
         if (n === 1 && teile > 1) status.textContent = T.laedt + n + T.von + teile + ' …';
