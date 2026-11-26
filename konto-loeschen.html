@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
-  <!-- Bestaetigung des Loeschwunschs einer gesperrten Person (a141, Kahan 25.11.2026).
+  <!-- a165 (Kahan 26.11.2026): ohne Token Formular fuer die Loeschanfrage ohne App
+       (Edge Function konto-loeschen-anfrage, immer gleiche Antwort). Mit Token wie a141,
+       Hinweis je nach Art des Links (gesperrt / regulaer). Wortlaut DE freigegeben
+       26.11.2026, 8 Sprachen maschinell (a160). NICHT veroeffentlicht bis a159.
+       Bestaetigung des Loeschwunschs einer gesperrten Person (a141, Kahan 25.11.2026).
        Token nur im Fragment (#), das nie an einen Server geht. Das Oeffnen der
        Seite loescht NICHTS (Schutz vor Vorabruf durch Mailprogramme und
        Virenscanner); erst der Knopf schickt den Token per POST. Keine
        personenbezogenen Daten auf der Seite, keine fremden Skripte/Schriften.
        Texte: Deutsch CC nach Kahans Mail, 8 Sprachen maschinell (a160). -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-9D1uu4v7aram/YxnpVwpNTjx48nXas1mPjv2uxlb24Y='; style-src 'unsafe-inline'; connect-src https://uqydyklazfbfbsnktezx.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-giME2zAJGbcXIt8UfuVzsN6/zn9N8xnG1Aflk1K61ig='; style-src 'unsafe-inline'; connect-src https://uqydyklazfbfbsnktezx.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
   <title>Wave</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,6 +27,10 @@
     button:disabled { background: #94a3b8; cursor: default; }
     [hidden] { display: none !important; }
     #status { margin-top: 20px; min-height: 24px; }
+    label { display: block; font-size: 14px; text-align: left; margin-bottom: 6px; color: #475569; }
+    input { width: 100%; font: inherit; font-size: 16px; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 12px; margin-bottom: 14px; }
+    #fknopf { margin-bottom: 20px; }
+    .klein { font-size: 13px; color: #64748b; text-align: left; margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -30,6 +38,16 @@
     <h1 id="titel"></h1>
     <p id="hinweis" hidden></p>
     <button id="knopf" type="button" hidden></button>
+    <div id="formular" hidden>
+      <p id="fintro"></p>
+      <label for="mail" id="flabel"></label>
+      <input id="mail" type="email" autocomplete="email" maxlength="254" required>
+      <button id="fknopf" type="button"></button>
+      <p id="fantwort" role="status" aria-live="polite" hidden></p>
+      <p id="fwas" class="klein"></p>
+      <p id="fapple" class="klein"></p>
+      <p id="fapp" class="klein"></p>
+    </div>
     <p id="status" role="status" aria-live="polite"></p>
   </main>
   <script>
@@ -39,39 +57,48 @@
     de: { titel: 'Konto löschen', pruefen: 'Der Link wird geprüft …', laeuft: 'Einen Moment …', knopf: 'Konto löschen',
       hinweis: 'Wenn du die Löschung deines Wave-Kontos möchtest, bestätige sie mit dem Knopf. Mit der Löschung entfällt die Möglichkeit, dein Konto nach einem Widerspruch zurückzubekommen. Die Unterlagen zur Sperrung bewahren wir drei Jahre auf. Wenn du keine Löschung verlangt hast, schließe diese Seite einfach.',
       fertig: 'Dein Konto wird gelöscht.', neutral: 'Dieser Link ist nicht gültig. Bei Fragen schreib uns an support@waveindex.de.',
-      fehler: 'Das hat gerade nicht geklappt. Bitte versuche es später erneut.' },
+      fehler: 'Das hat gerade nicht geklappt. Bitte versuche es später erneut.',
+      fintro: "Du kannst dein Wave-Konto auch ohne die App löschen. Gib die E-Mail-Adresse ein, mit der du bei Wave angemeldet bist. Wir schicken dir dann einen Link an diese Adresse. Erst wenn du die Löschung dort bestätigst, löschen wir dein Konto.", flabel: "E-Mail-Adresse", fknopf: "Löschung anfordern", fantwort: "Wenn es ein Konto mit dieser Adresse gibt, haben wir dir eine E-Mail geschickt. Der Link gilt 7 Tage.", fwas: "Was gelöscht wird: dein Konto, dein Profil, deine Fotos und Nachrichten. Welche Angaben wir aus rechtlichen Gründen noch eine Zeit lang aufbewahren und wie lange, steht in unserer Datenschutzerklärung unter Ziffer 8.", fapple: "Mit Apple angemeldet und „E-Mail verbergen“ gewählt? Dann kennst du die Adresse vielleicht nicht. Lösche dein Konto in der App unter Einstellungen oder schreib uns an support@waveindex.de.", fapp: "In der App geht es schneller: Einstellungen, Konto löschen.", hinweisR: "Wenn du die Löschung deines Wave-Kontos möchtest, bestätige sie mit dem Knopf. Wenn du keine Löschung verlangt hast, schließe diese Seite einfach." },
     en: { titel: 'Delete account', pruefen: 'Checking the link …', laeuft: 'One moment …', knopf: 'Delete account',
       hinweis: 'If you want your Wave account to be deleted, confirm it with the button. With the deletion, you lose the possibility of getting your account back after an objection. We keep the records of the suspension for three years. If you did not request a deletion, simply close this page.',
       fertig: 'Your account is being deleted.', neutral: 'This link is not valid. If you have questions, write to us at support@waveindex.de.',
-      fehler: 'That did not work just now. Please try again later.' },
+      fehler: 'That did not work just now. Please try again later.',
+      fintro: "You can also delete your Wave account without the app. Enter the email address you use to sign in to Wave. We will then send a link to that address. We only delete your account once you confirm the deletion there.", flabel: "Email address", fknopf: "Request deletion", fantwort: "If there is an account with this address, we have sent you an email. The link is valid for 7 days.", fwas: "What is deleted: your account, your profile, your photos and messages. Which data we keep for a while for legal reasons, and for how long, is described in section 8 of our privacy policy.", fapple: "Signed in with Apple and chose “Hide My Email”? Then you may not know the address. Delete your account in the app under Settings or write to us at support@waveindex.de.", fapp: "It is quicker in the app: Settings, Delete account.", hinweisR: "If you want your Wave account to be deleted, confirm it with the button. If you did not request a deletion, simply close this page." },
     tr: { titel: 'Hesabı sil', pruefen: 'Bağlantı kontrol ediliyor …', laeuft: 'Bir saniye …', knopf: 'Hesabı sil',
       hinweis: 'Wave hesabının silinmesini istiyorsan düğmeyle onayla. Silme işlemiyle, bir itirazdan sonra hesabını geri alma imkânı ortadan kalkar. Engellemeye ilişkin belgeleri üç yıl saklıyoruz. Silme talebinde bulunmadıysan bu sayfayı kapatman yeterli.',
       fertig: 'Hesabın siliniyor.', neutral: 'Bu bağlantı geçerli değil. Sorun varsa support@waveindex.de adresine yaz.',
-      fehler: 'Şu anda olmadı. Lütfen daha sonra tekrar dene.' },
+      fehler: 'Şu anda olmadı. Lütfen daha sonra tekrar dene.',
+      fintro: "Wave hesabını uygulama olmadan da silebilirsin. Wave'e giriş yaptığın e-posta adresini gir. Bu adrese bir bağlantı göndeririz. Hesabını ancak silme işlemini orada onayladığında sileriz.", flabel: "E-posta adresi", fknopf: "Silme talep et", fantwort: "Bu adrese ait bir hesap varsa sana bir e-posta gönderdik. Bağlantı 7 gün geçerlidir.", fwas: "Silinenler: hesabın, profilin, fotoğrafların ve mesajların. Yasal nedenlerle hangi bilgileri bir süre daha sakladığımızı ve ne kadar süreyle sakladığımızı gizlilik politikamızın 8. maddesinde bulabilirsin.", fapple: "Apple ile giriş yaptın ve „E-postamı gizle“yi mi seçtin? O zaman adresi bilmiyor olabilirsin. Hesabını uygulamada Ayarlar bölümünden sil ya da support@waveindex.de adresine yaz.", fapp: "Uygulamada daha hızlı: Ayarlar, Hesabı sil.", hinweisR: "Wave hesabının silinmesini istiyorsan düğmeyle onayla. Silme talebinde bulunmadıysan bu sayfayı kapatman yeterli." },
     es: { titel: 'Eliminar cuenta', pruefen: 'Comprobando el enlace …', laeuft: 'Un momento …', knopf: 'Eliminar cuenta',
       hinweis: 'Si quieres que se elimine tu cuenta de Wave, confírmalo con el botón. Con la eliminación pierdes la posibilidad de recuperar tu cuenta tras una reclamación. Conservamos la documentación del bloqueo durante tres años. Si no has solicitado ninguna eliminación, simplemente cierra esta página.',
       fertig: 'Tu cuenta se está eliminando.', neutral: 'Este enlace no es válido. Si tienes preguntas, escríbenos a support@waveindex.de.',
-      fehler: 'No ha funcionado. Inténtalo de nuevo más tarde.' },
+      fehler: 'No ha funcionado. Inténtalo de nuevo más tarde.',
+      fintro: "También puedes eliminar tu cuenta de Wave sin la app. Introduce la dirección de correo con la que inicias sesión en Wave. Te enviaremos un enlace a esa dirección. Solo eliminamos tu cuenta cuando confirmas allí la eliminación.", flabel: "Dirección de correo", fknopf: "Solicitar eliminación", fantwort: "Si existe una cuenta con esta dirección, te hemos enviado un correo. El enlace es válido durante 7 días.", fwas: "Qué se elimina: tu cuenta, tu perfil, tus fotos y mensajes. Qué datos conservamos un tiempo por motivos legales, y durante cuánto tiempo, se indica en el apartado 8 de nuestra política de privacidad.", fapple: "¿Iniciaste sesión con Apple y elegiste «Ocultar mi correo»? Entonces quizá no conozcas la dirección. Elimina tu cuenta en la app en Ajustes o escríbenos a support@waveindex.de.", fapp: "En la app es más rápido: Ajustes, Eliminar cuenta.", hinweisR: "Si quieres que se elimine tu cuenta de Wave, confírmalo con el botón. Si no has solicitado ninguna eliminación, simplemente cierra esta página." },
     fr: { titel: 'Supprimer le compte', pruefen: 'Vérification du lien …', laeuft: 'Un instant …', knopf: 'Supprimer le compte',
       hinweis: 'Si tu souhaites la suppression de ton compte Wave, confirme-la avec le bouton. Avec la suppression, tu perds la possibilité de récupérer ton compte après une contestation. Nous conservons les documents relatifs à la suspension pendant trois ans. Si tu n\'as pas demandé de suppression, ferme simplement cette page.',
       fertig: 'Ton compte est en cours de suppression.', neutral: 'Ce lien n\'est pas valable. Pour toute question, écris-nous à support@waveindex.de.',
-      fehler: 'Cela n\'a pas fonctionné. Réessaie plus tard.' },
+      fehler: 'Cela n\'a pas fonctionné. Réessaie plus tard.',
+      fintro: "Tu peux aussi supprimer ton compte Wave sans l'application. Saisis l'adresse e-mail avec laquelle tu te connectes à Wave. Nous t'enverrons un lien à cette adresse. Nous ne supprimons ton compte que lorsque tu confirmes la suppression là-bas.", flabel: "Adresse e-mail", fknopf: "Demander la suppression", fantwort: "S'il existe un compte avec cette adresse, nous t'avons envoyé un e-mail. Le lien est valable 7 jours.", fwas: "Ce qui est supprimé : ton compte, ton profil, tes photos et tes messages. Les données que nous conservons encore un temps pour des raisons légales, et pendant combien de temps, sont indiquées au point 8 de notre politique de confidentialité.", fapple: "Connecté avec Apple et « Masquer mon adresse e-mail » choisi ? Tu ne connais peut-être pas l'adresse. Supprime ton compte dans l'application sous Réglages ou écris-nous à support@waveindex.de.", fapp: "C'est plus rapide dans l'application : Réglages, Supprimer le compte.", hinweisR: "Si tu souhaites la suppression de ton compte Wave, confirme-la avec le bouton. Si tu n'as pas demandé de suppression, ferme simplement cette page." },
     pl: { titel: 'Usuń konto', pruefen: 'Sprawdzanie linku …', laeuft: 'Chwileczkę …', knopf: 'Usuń konto',
       hinweis: 'Jeśli chcesz usunąć swoje konto Wave, potwierdź to przyciskiem. Po usunięciu nie będzie już można odzyskać konta po odwołaniu. Dokumentację blokady przechowujemy przez trzy lata. Jeśli nie prosiłeś(-aś) o usunięcie, po prostu zamknij tę stronę.',
       fertig: 'Twoje konto jest usuwane.', neutral: 'Ten link jest nieważny. W razie pytań napisz do nas na support@waveindex.de.',
-      fehler: 'Nie udało się. Spróbuj ponownie później.' },
+      fehler: 'Nie udało się. Spróbuj ponownie później.',
+      fintro: "Możesz usunąć konto Wave także bez aplikacji. Podaj adres e-mail, którym logujesz się do Wave. Wyślemy na ten adres link. Usuniemy konto dopiero wtedy, gdy tam potwierdzisz usunięcie.", flabel: "Adres e-mail", fknopf: "Poproś o usunięcie", fantwort: "Jeśli istnieje konto z tym adresem, wysłaliśmy Ci e-mail. Link jest ważny 7 dni.", fwas: "Co zostanie usunięte: Twoje konto, profil, zdjęcia i wiadomości. Jakie dane przechowujemy jeszcze przez pewien czas z przyczyn prawnych i jak długo, opisujemy w punkcie 8 naszej polityki prywatności.", fapple: "Logujesz się przez Apple i wybrałeś(-aś) „Ukryj mój adres e-mail“? Wtedy możesz nie znać adresu. Usuń konto w aplikacji w Ustawieniach albo napisz do nas na support@waveindex.de.", fapp: "W aplikacji jest szybciej: Ustawienia, Usuń konto.", hinweisR: "Jeśli chcesz usunąć swoje konto Wave, potwierdź to przyciskiem. Jeśli nie prosiłeś(-aś) o usunięcie, po prostu zamknij tę stronę." },
     ar: { titel: 'حذف الحساب', pruefen: 'جارٍ التحقق من الرابط …', laeuft: 'لحظة من فضلك …', knopf: 'حذف الحساب',
       hinweis: 'إذا كنت تريد حذف حسابك في Wave، فأكّد ذلك بالضغط على الزر. بالحذف تفقد إمكانية استعادة حسابك بعد الاعتراض. نحتفظ بالمستندات المتعلقة بالحظر لمدة ثلاث سنوات. إذا لم تطلب الحذف، فأغلق هذه الصفحة فقط.',
       fertig: 'يجري حذف حسابك.', neutral: 'هذا الرابط غير صالح. إذا كانت لديك أسئلة، فراسلنا على support@waveindex.de.',
-      fehler: 'لم ينجح ذلك الآن. يُرجى المحاولة لاحقًا.' },
+      fehler: 'لم ينجح ذلك الآن. يُرجى المحاولة لاحقًا.',
+      fintro: "يمكنك أيضًا حذف حسابك في Wave دون التطبيق. أدخل عنوان البريد الإلكتروني الذي تسجّل به الدخول إلى Wave. سنرسل إليك رابطًا إلى هذا العنوان. لن نحذف حسابك إلا بعد أن تؤكّد الحذف هناك.", flabel: "البريد الإلكتروني", fknopf: "طلب الحذف", fantwort: "إذا كان هناك حساب بهذا العنوان، فقد أرسلنا إليك بريدًا إلكترونيًا. الرابط صالح لمدة 7 أيام.", fwas: "ما الذي يُحذف: حسابك وملفك الشخصي وصورك ورسائلك. البيانات التي نحتفظ بها لفترة لأسباب قانونية ومدة ذلك موضحة في البند 8 من سياسة الخصوصية.", fapple: "سجّلت الدخول عبر Apple واخترت «إخفاء بريدي الإلكتروني»؟ قد لا تعرف العنوان حينها. احذف حسابك في التطبيق من الإعدادات أو راسلنا على support@waveindex.de.", fapp: "في التطبيق أسرع: الإعدادات، حذف الحساب.", hinweisR: "إذا كنت تريد حذف حسابك في Wave، فأكّد ذلك بالضغط على الزر. إذا لم تطلب الحذف، فأغلق هذه الصفحة فقط." },
     ru: { titel: 'Удалить аккаунт', pruefen: 'Проверяем ссылку …', laeuft: 'Минутку …', knopf: 'Удалить аккаунт',
       hinweis: 'Если ты хочешь удалить свой аккаунт Wave, подтверди это кнопкой. После удаления вернуть аккаунт после возражения будет невозможно. Документы о блокировке мы храним три года. Если ты не запрашивал(а) удаление, просто закрой эту страницу.',
       fertig: 'Твой аккаунт удаляется.', neutral: 'Эта ссылка недействительна. Если есть вопросы, напиши нам на support@waveindex.de.',
-      fehler: 'Сейчас не получилось. Пожалуйста, попробуй позже.' },
+      fehler: 'Сейчас не получилось. Пожалуйста, попробуй позже.',
+      fintro: "Удалить аккаунт Wave можно и без приложения. Введи адрес электронной почты, с которым ты входишь в Wave. Мы отправим на этот адрес ссылку. Мы удалим аккаунт, только когда ты подтвердишь удаление там.", flabel: "Адрес электронной почты", fknopf: "Запросить удаление", fantwort: "Если аккаунт с этим адресом существует, мы отправили тебе письмо. Ссылка действует 7 дней.", fwas: "Что удаляется: твой аккаунт, профиль, фото и сообщения. Какие данные мы ещё некоторое время храним по требованиям закона и как долго, описано в пункте 8 нашей политики конфиденциальности.", fapple: "Входишь через Apple и выбрал(а) «Скрыть e-mail»? Тогда ты можешь не знать адрес. Удали аккаунт в приложении в настройках или напиши нам на support@waveindex.de.", fapp: "В приложении быстрее: Настройки, Удалить аккаунт.", hinweisR: "Если ты хочешь удалить свой аккаунт Wave, подтверди это кнопкой. Если ты не запрашивал(а) удаление, просто закрой эту страницу." },
     it: { titel: 'Elimina account', pruefen: 'Verifica del link …', laeuft: 'Un momento …', knopf: 'Elimina account',
       hinweis: 'Se desideri l\'eliminazione del tuo account Wave, confermala con il pulsante. Con l\'eliminazione perdi la possibilità di riavere il tuo account dopo un ricorso. Conserviamo la documentazione relativa al blocco per tre anni. Se non hai chiesto l\'eliminazione, chiudi semplicemente questa pagina.',
       fertig: 'Il tuo account viene eliminato.', neutral: 'Questo link non è valido. Per domande scrivici a support@waveindex.de.',
-      fehler: 'Non ha funzionato. Riprova più tardi.' }
+      fehler: 'Non ha funzionato. Riprova più tardi.',
+      fintro: "Puoi eliminare il tuo account Wave anche senza l'app. Inserisci l'indirizzo e-mail con cui accedi a Wave. Ti invieremo un link a questo indirizzo. Eliminiamo il tuo account solo quando confermi lì l'eliminazione.", flabel: "Indirizzo e-mail", fknopf: "Richiedi eliminazione", fantwort: "Se esiste un account con questo indirizzo, ti abbiamo inviato un'e-mail. Il link è valido 7 giorni.", fwas: "Cosa viene eliminato: il tuo account, il tuo profilo, le tue foto e i tuoi messaggi. Quali dati conserviamo ancora per un certo periodo per motivi legali, e per quanto tempo, è indicato al punto 8 della nostra informativa sulla privacy.", fapple: "Hai effettuato l'accesso con Apple e scelto «Nascondi la mia e-mail»? Allora forse non conosci l'indirizzo. Elimina il tuo account nell'app in Impostazioni o scrivici a support@waveindex.de.", fapp: "Nell'app è più veloce: Impostazioni, Elimina account.", hinweisR: "Se desideri l'eliminazione del tuo account Wave, confermala con il pulsante. Se non hai chiesto l'eliminazione, chiudi semplicemente questa pagina." }
   };
   var p = new URLSearchParams((location.hash || '').replace(/^#/, ''));
   var token = p.get('t') || '';
@@ -94,13 +121,34 @@
     var r = await fetch(EF, { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ aktion: aktion, t: token }), cache: 'no-store', referrerPolicy: 'no-referrer', credentials: 'omit' });
     var j = {}; try { j = await r.json(); } catch (e) {}
-    return { ok: r.ok && j.ok === true, grund: j.grund || 'serverfehler' };
+    return { ok: r.ok && j.ok === true, grund: j.grund || 'serverfehler', art: j.art || '' };
+  }
+  if (!token) {
+    // a165: Formular fuer die Loeschanfrage ohne App.
+    var EF_ANFRAGE = 'https://uqydyklazfbfbsnktezx.supabase.co/functions/v1/konto-loeschen-anfrage';
+    var form = document.getElementById('formular'), mail = document.getElementById('mail');
+    var fknopf = document.getElementById('fknopf'), fantwort = document.getElementById('fantwort');
+    ['fintro', 'flabel', 'fknopf', 'fwas', 'fapple', 'fapp'].forEach(function (k) { document.getElementById(k).textContent = T[k]; });
+    form.hidden = false;
+    fknopf.addEventListener('click', async function () {
+      var adr = (mail.value || '').trim();
+      if (!adr || adr.indexOf('@') < 1) { mail.focus(); return; }
+      fknopf.disabled = true;
+      try {
+        await fetch(EF_ANFRAGE, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: adr }), cache: 'no-store', referrerPolicy: 'no-referrer', credentials: 'omit' });
+      } catch (e) {}
+      // Immer dieselbe Antwort, auch bei Fehlern (kein Konto-Nachweis).
+      mail.value = ''; fantwort.textContent = T.fantwort; fantwort.hidden = false;
+      setTimeout(function () { fknopf.disabled = false; }, 5000);
+    });
+    return;
   }
   if (!/^[A-Za-z0-9_-]{43}$/.test(token)) { neutral(); return; }
   // Oeffnen: nur pruefen, nichts loeschen.
   status.textContent = T.pruefen;
   rufen('pruefen').then(function (r) {
-    if (r.ok) { status.textContent = ''; hinweis.hidden = false; knopf.hidden = false; }
+    if (r.ok) { status.textContent = ''; if (r.art === 'regulaer') hinweis.textContent = T.hinweisR; hinweis.hidden = false; knopf.hidden = false; }
     else if (r.grund === 'ungueltig') { neutral(); }
     else { status.textContent = T.fehler; }
   }, function () { status.textContent = T.fehler; });
